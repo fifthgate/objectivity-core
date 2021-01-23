@@ -1,8 +1,8 @@
 <?php
 
-namespace Fifthgate\Objectivity\Domain;
+namespace Fifthgate\Objectivity\Core\Domain;
 
-use Fifthgate\Objectivity\Domain\Interfaces\DomainEntityInterface;
+use Fifthgate\Objectivity\Domain\Core\Interfaces\DomainEntityInterface;
 use \DateTimeInterface;
 
 abstract class AbstractDomainEntity implements DomainEntityInterface

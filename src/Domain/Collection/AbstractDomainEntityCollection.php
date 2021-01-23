@@ -1,10 +1,10 @@
 <?php
 
-namespace Fifthgate\Objectivity\Domain\Collection;
+namespace Fifthgate\Objectivity\Core\Domain\Collection;
 
-use Fifthgate\Objectivity\Domain\Collection\Interfaces\DomainEntityCollectionInterface;
+use Fifthgate\Objectivity\Core\Domain\Collection\Interfaces\DomainEntityCollectionInterface;
 
-use Fifthgate\Objectivity\Domain\Interfaces\DomainEntityInterface;
+use Fifthgate\Objectivity\Core\Domain\Interfaces\DomainEntityInterface;
 
 /**
  * @codeCoverageIgnore

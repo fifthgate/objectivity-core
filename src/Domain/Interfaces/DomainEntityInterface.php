@@ -1,6 +1,6 @@
 <?php
 
-namespace Fifthgate\Objectivity\Domain\Interfaces;
+namespace Fifthgate\Objectivity\Core\Domain\Interfaces;
 
 use \DateTimeInterface;
 

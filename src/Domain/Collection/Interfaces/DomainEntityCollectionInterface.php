@@ -1,8 +1,8 @@
 <?php
 
-namespace Fifthgate\Objectivity\Domain\Collection\Interfaces;
+namespace Fifthgate\Objectivity\Core\Domain\Collection\Interfaces;
 
-use Fifthgate\Objectivity\Domain\Interfaces\DomainEntityInterface;
+use Fifthgate\Objectivity\Core\Domain\Interfaces\DomainEntityInterface;
 use \Iterator;
 
 interface DomainEntityCollectionInterface extends Iterator

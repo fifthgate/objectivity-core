@@ -25,7 +25,8 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Fifthgate\\Objectivity\\Core\\Tests\\": "tests"
+            "Fifthgate\\Objectivity\\Core\\Tests\\": "tests",
+            "Fifthgate\\Objectivity\\Core\\Tests\\Mocks\\": "tests/mocks"
         }
     }
 }

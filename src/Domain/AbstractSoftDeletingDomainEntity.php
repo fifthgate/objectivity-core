@@ -1,9 +1,9 @@
 <?php
 
-namespace Fifthgate\Objectivity\Domain;
+namespace Fifthgate\Objectivity\Core\Domain;
 
-use Fifthgate\Objectivity\Domain\AbstractDomainEntity;
-use Fifthgate\Objectivity\Domain\Interfaces\DomainEntityInterface;
+use Fifthgate\Objectivity\Core\Domain\AbstractDomainEntity;
+use Fifthgate\Objectivity\Core\Domain\Interfaces\DomainEntityInterface;
 use \DateTimeInterface;
 
 
