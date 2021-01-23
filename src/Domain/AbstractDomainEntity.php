@@ -4,8 +4,9 @@ namespace Fifthgate\Objectivity\Core\Domain;
 
 use Fifthgate\Objectivity\Core\Domain\Interfaces\DomainEntityInterface;
 use \DateTimeInterface;
+use Fifthgate\Objectivity\Core\Domain\Interfaces\TimestampingDomainEntityInterface;
 
-abstract class AbstractDomainEntity implements DomainEntityInterface
+abstract class AbstractDomainEntity implements DomainEntityInterface, TimestampingDomainEntityInterface
 {
     protected ?int $id = null;
 
