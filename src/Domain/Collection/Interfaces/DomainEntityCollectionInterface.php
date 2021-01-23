@@ -1,0 +1,31 @@
+<?php
+
+namespace Fifthgate\Objectivity\Domain\Collection\Interfaces;
+
+use Fifthgate\Objectivity\Domain\Interfaces\DomainEntityInterface;
+use \Iterator;
+
+interface DomainEntityCollectionInterface extends Iterator
+{
+    public function add(DomainEntityInterface $domainEntity);
+
+    public function delete($key) : bool;
+
+    public function isEmpty() : bool;
+
+    public function flush();
+
+    public function sortCollection(callable $sortRoutine) : DomainEntityCollectionInterface;
+
+    public function filter(callable $filterRoutine) : DomainEntityCollectionInterface;
+
+    public function slice(int $length) : array;
+
+    public function hasID(int $id) :bool;
+
+    public function first() : ? DomainEntityInterface;
+
+    public function last() : ? DomainEntityInterface;
+
+    public function count() : int;
+}

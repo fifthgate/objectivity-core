@@ -1,0 +1,1 @@
+# Objectivity Core only provides abstract classes and therefore is not tested at this time.
