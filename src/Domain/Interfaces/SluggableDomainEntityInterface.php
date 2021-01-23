@@ -9,5 +9,5 @@ interface SluggableDomainEntityInterface extends DomainEntityInterface
 {
     public function getSlug() : string;
 
-    public function setSlug(string $slug) : string;
+    public function setSlug(string $slug);
 }
