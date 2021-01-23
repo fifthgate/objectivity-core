@@ -13,6 +13,7 @@ abstract class AbstractDomainEntityCollection implements DomainEntityCollectionI
 
     protected $position;
 
+    //@codeCoverageIgnoreStart
     public function __construct(array $collection = [])
     {
         $this->position = 0;
@@ -20,6 +21,7 @@ abstract class AbstractDomainEntityCollection implements DomainEntityCollectionI
             $this->collection = $collection;
         }
     }
+    //@codeCoverageIgnoreEnd
 
     public function rewind()
     {
@@ -78,7 +80,13 @@ abstract class AbstractDomainEntityCollection implements DomainEntityCollectionI
 
     public function filter(callable $filterRoutine) : DomainEntityCollectionInterface
     {
-        //
+        $filteredCollection = new $this;
+        foreach ($this->collection as $item) {
+            if ($filterRoutine($item)) {
+                $filteredCollection->add($item);
+            }
+        }
+        return $filteredCollection;
     }
 
     public function slice(int $length) : array
