@@ -2,7 +2,7 @@
 
 namespace Fifthgate\Objectivity\Core\Domain;
 
-use Fifthgate\Objectivity\Domain\Core\Interfaces\DomainEntityInterface;
+use Fifthgate\Objectivity\Core\Domain\Interfaces\DomainEntityInterface;
 use \DateTimeInterface;
 
 abstract class AbstractDomainEntity implements DomainEntityInterface
@@ -15,17 +15,17 @@ abstract class AbstractDomainEntity implements DomainEntityInterface
 
     protected $hash;
 
-    final public function isDirty()
+    final public function isDirty() : bool
     {
-        return (!$this->hash or $this->hash != $this->hashSelf());
+        return ((!$this->hash) or ($this->hash != $this->hashSelf()));
     }
 
     final public function hashSelf() : string
     {
-        $hash = md5(serialize(get_object_vars($this)));
-        if (!$this->hash) {
-            $this->hash = $hash;
-        }
+        $vars = get_object_vars($this);
+        unset($vars['hash']);
+        $hash = md5(serialize($vars));
+        $this->hash = $hash;
         return $hash;
     }
 

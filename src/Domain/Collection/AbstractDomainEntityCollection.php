@@ -6,9 +6,7 @@ use Fifthgate\Objectivity\Core\Domain\Collection\Interfaces\DomainEntityCollecti
 
 use Fifthgate\Objectivity\Core\Domain\Interfaces\DomainEntityInterface;
 
-/**
- * @codeCoverageIgnore
- */
+
 abstract class AbstractDomainEntityCollection implements DomainEntityCollectionInterface
 {
     protected $collection = [];
