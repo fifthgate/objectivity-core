@@ -10,6 +10,7 @@ class EntityTest extends ObjectivityCoreTestCase {
 	public function testObjectIntegrity() {
 		$domainEntity = new MockDomainEntity;
 		$domainEntity->setID(987);
+
 		$this->assertEquals(987, $domainEntity->getID());
 		$createdAt = new DateTime('2009-10-13 09:09:09');
 		$domainEntity->setCreatedAt($createdAt);
@@ -29,5 +30,8 @@ class EntityTest extends ObjectivityCoreTestCase {
 		$deletedAt = new DateTime('2009-10-16 09:09:09');
 		$domainEntity->setDeletedAt($deletedAt);
 		$this->assertEquals($deletedAt, $domainEntity->getDeletedAt());
+
+		$domainEntity->setDummyStringValue('dummy');
+		$this->assertEquals('dummy', $domainEntity->getDummyStringValue());
 	}
 }

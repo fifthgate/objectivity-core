@@ -21,11 +21,13 @@ interface DomainEntityCollectionInterface extends Iterator
 
     public function slice(int $length) : array;
 
-    public function hasID(int $id) :bool;
+    public function hasID(int $id) : bool;
 
     public function first() : ? DomainEntityInterface;
 
     public function last() : ? DomainEntityInterface;
 
     public function count() : int;
+
+    public function hasItemWithFieldValue(string $fieldGetMethodName, string $fieldValue) : bool;
 }

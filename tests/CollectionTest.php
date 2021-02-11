@@ -17,13 +17,20 @@ class CollectionTest extends ObjectivityCoreTestCase {
 		$entityOne = new MockDomainEntity;
 		$entityTwo = new MockDomainEntity;
 		$entityThree = new MockDomainEntity;
-
+		//Timestamps
 		$entityOne->setUpdatedAt(new DateTime('2012-12-12 12:12:12'));
 		$entityTwo->setUpdatedAt(new DateTime('2011-11-11 11:11:11'));
 		$entityThree->setUpdatedAt(new DateTime('2010-10-10 10:10:10'));
+		//ID
 		$entityOne->setID(1);
 		$entityTwo->setID(2);
 		$entityThree->setID(3);
+		//Dummy Value
+		$entityOne->setDummyStringValue('string1');
+		$entityTwo->setDummyStringValue('string2');
+		$entityThree->setDummyStringValue('string3');
+
+		//Add To Collection
 		$collection->add($entityOne);
 		$collection->add($entityTwo);
 		$collection->add($entityThree);
@@ -79,5 +86,37 @@ class CollectionTest extends ObjectivityCoreTestCase {
 		
 		$collection->flush();
 		$this->assertEquals(0, $collection->count());
+	}
+
+	public function testHasKey() {
+		$collection = new MockDomainEntityCollection;
+		$this->assertNull($collection->first());
+		$this->assertNull($collection->last());
+		$this->assertEquals(0, $collection->count());
+		$this->assertTrue($collection->isEmpty());
+
+		$entityOne = new MockDomainEntity;
+		$entityTwo = new MockDomainEntity;
+		$entityThree = new MockDomainEntity;
+		//Timestamps
+		$entityOne->setUpdatedAt(new DateTime('2012-12-12 12:12:12'));
+		$entityTwo->setUpdatedAt(new DateTime('2011-11-11 11:11:11'));
+		$entityThree->setUpdatedAt(new DateTime('2010-10-10 10:10:10'));
+		//ID
+		$entityOne->setID(1);
+		$entityTwo->setID(2);
+		$entityThree->setID(3);
+		//Dummy Value
+		$entityOne->setDummyStringValue('string1');
+		$entityTwo->setDummyStringValue('string2');
+		$entityThree->setDummyStringValue('string3');
+
+		//Add To Collection
+		$collection->add($entityOne);
+		$collection->add($entityTwo);
+		$collection->add($entityThree);
+
+		$this->assertTrue($collection->hasItemWithFieldValue('getDummyStringValue', 'string1'));
+		$this->assertFalse($collection->hasItemWithFieldValue('getDummyStringValue', 'dummy5'));
 	}
 }

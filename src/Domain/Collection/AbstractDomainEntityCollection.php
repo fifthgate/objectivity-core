@@ -143,5 +143,17 @@ abstract class AbstractDomainEntityCollection implements DomainEntityCollectionI
         }
         return $i;
     }
+
+    public function hasItemWithFieldValue(string $fieldGetMethodName, string $fieldValue) : bool {
+        foreach ($this->collection as $item) {
+            if (!method_exists($item, $fieldGetMethodName)) {
+                continue;
+            }
+            if ($item->$fieldGetMethodName() == $fieldValue) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
  
