@@ -6,5 +6,5 @@ use \DateTimeInterface;
 
 interface DomainEntityInterface
 {
-    public function getID() : ?int;
+    public function getID();
 }

@@ -8,7 +8,7 @@ use Fifthgate\Objectivity\Core\Domain\Interfaces\TimestampingDomainEntityInterfa
 
 abstract class AbstractDomainEntity implements DomainEntityInterface, TimestampingDomainEntityInterface
 {
-    protected ?int $id = null;
+    protected $id = null;
 
     protected $createdAt;
 
@@ -30,12 +30,12 @@ abstract class AbstractDomainEntity implements DomainEntityInterface, Timestampi
         return $hash;
     }
 
-    public function setID(int $id)
+    public function setID($id)
     {
         $this->id = $id;
     }
 
-    public function getID() : ?int
+    public function getID()
     {
         return $this->id;
     }
