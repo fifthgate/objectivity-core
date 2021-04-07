@@ -16,12 +16,12 @@ abstract class AbstractDomainEntity implements DomainEntityInterface, Timestampi
 
     protected $hash;
 
-    final public function isDirty() : bool
+    public function isDirty() : bool
     {
         return ((!$this->hash) or ($this->hash != $this->hashSelf()));
     }
 
-    final public function hashSelf() : string
+    public function hashSelf() : string
     {
         $vars = get_object_vars($this);
         unset($vars['hash']);
