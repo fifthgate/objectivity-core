@@ -32,4 +32,6 @@ interface DomainEntityCollectionInterface extends Iterator
     public function hasItemWithFieldValue(string $fieldGetMethodName, string $fieldValue) : bool;
 
     public function filterByFieldValue(string $fieldGetMethodName, string $fieldValue) : ? DomainEntityCollectionInterface;
+
+    public function replace(int $entityID, DomainEntityInterface $domainEntity);
 }
