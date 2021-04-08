@@ -171,7 +171,7 @@ abstract class AbstractDomainEntityCollection implements DomainEntityCollectionI
 
     public function replace(int $entityID, DomainEntityInterface $domainEntity) {
         foreach ($this->collection as $delta => $item) {
-            if ($item->getID() == $entityID) {
+            if ($item->getID() == $entityID && $item->getID() !== 0) {
                 $this->collection[$delta] = $domainEntity;
             }
         }
