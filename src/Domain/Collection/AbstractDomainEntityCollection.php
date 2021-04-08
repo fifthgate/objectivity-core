@@ -155,5 +155,19 @@ abstract class AbstractDomainEntityCollection implements DomainEntityCollectionI
         }
         return false;
     }
+
+    public function filterByFieldValue(string $fieldGetMethodName, string $fieldValue) : ? DomainEntityCollectionInterface {
+        $filteredCollection = new $this;
+        foreach ($this->collection as $item) {
+            if (!method_exists($item, $fieldGetMethodName)) {
+                continue;
+            }
+            if ($item->$fieldGetMethodName() == $fieldValue) {
+                $filteredCollection->add($item);
+            }
+        }
+        return $filteredCollection->count() > 0 ? $filteredCollection : null;
+
+    }
 }
  

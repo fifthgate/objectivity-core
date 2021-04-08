@@ -30,4 +30,6 @@ interface DomainEntityCollectionInterface extends Iterator
     public function count() : int;
 
     public function hasItemWithFieldValue(string $fieldGetMethodName, string $fieldValue) : bool;
+
+    public function filterByFieldValue(string $fieldGetMethodName, string $fieldValue) : ? DomainEntityCollectionInterface;
 }

@@ -118,5 +118,35 @@ class CollectionTest extends ObjectivityCoreTestCase {
 
 		$this->assertTrue($collection->hasItemWithFieldValue('getDummyStringValue', 'string1'));
 		$this->assertFalse($collection->hasItemWithFieldValue('getDummyStringValue', 'dummy5'));
+		$this->assertFalse($collection->hasItemWithFieldValue('completelymadeupmethod', 'dummy6'));
+	}
+
+	public function testFilterByFieldValue() {
+		$collection = new MockDomainEntityCollection;
+
+		$entityOne = new MockDomainEntity;
+		$entityTwo = new MockDomainEntity;
+		$entityThree = new MockDomainEntity;
+		//Timestamps
+		$entityOne->setUpdatedAt(new DateTime('2012-12-12 12:12:12'));
+		$entityTwo->setUpdatedAt(new DateTime('2011-11-11 11:11:11'));
+		$entityThree->setUpdatedAt(new DateTime('2010-10-10 10:10:10'));
+		//ID
+		$entityOne->setID(1);
+		$entityTwo->setID(2);
+		$entityThree->setID(3);
+		//Dummy Value
+		$entityOne->setDummyStringValue('string1');
+		$entityTwo->setDummyStringValue('string2');
+		$entityThree->setDummyStringValue('string3');
+
+		//Add To Collection
+		$collection->add($entityOne);
+		$collection->add($entityTwo);
+		$collection->add($entityThree);
+		$this->assertNotNull($collection->filterByFieldValue('getDummyStringValue', 'string1'));
+		$this->assertEquals($entityOne, $collection->filterByFieldValue('getDummyStringValue', 'string1')->first());
+		$this->assertNull($collection->filterByFieldValue('getDummyStringValue', 'string5'));
+		$this->assertNull($collection->filterByFieldValue('completelymadeupmethod', 'string1'));
 	}
 }
