@@ -189,4 +189,81 @@ class CollectionTest extends ObjectivityCoreTestCase {
 		$this->assertEquals($entityTwoUpdatedAt, $revisedEntity2->getUpdatedAt());
 
 	}
+
+	public function testCall() {
+		$collection = new MockDomainEntityCollection;
+		$entityOne = new MockDomainEntity;
+		$entityTwo = new MockDomainEntity;
+		$entityThree = new MockDomainEntity;
+
+		$entityOneUpdatedAt = new DateTime('2012-12-12 12:12:12');
+		$entityTwoUpdatedAt = new DateTime('2011-11-11 11:11:11');
+		$entityThreeUpdatedAt = new DateTime('2010-10-10 10:10:10');
+		//Timestamps
+		$entityOne->setUpdatedAt($entityOneUpdatedAt);
+		$entityTwo->setUpdatedAt($entityTwoUpdatedAt);
+		$entityThree->setUpdatedAt($entityThreeUpdatedAt);
+
+		//ID
+		$entityOne->setID(1);
+		$entityTwo->setID(2);
+		$entityThree->setID(3);
+
+		//Dummy Value
+		$entityOne->setDummyStringValue('string1');
+		$entityTwo->setDummyStringValue('string2');
+		$entityThree->setDummyStringValue('string3');
+
+		//Add To Collection
+		$collection->add($entityOne);
+		$collection->add($entityTwo);
+		$collection->add($entityThree);
+
+		$this->assertTrue($collection->call(2, "setDummyStringValue", ["stringX"]));
+		$revisedEntity2 = $collection->filterByFieldValue('getID', 2)->first();
+		$this->assertEquals("stringX", $revisedEntity2->getDummyStringValue());
+	}
+
+	public function testMassCall() {
+		$collection = new MockDomainEntityCollection;
+		$entityOne = new MockDomainEntity;
+		$entityTwo = new MockDomainEntity;
+		$entityThree = new MockDomainEntity;
+
+		$entityOneUpdatedAt = new DateTime('2012-12-12 12:12:12');
+		$entityTwoUpdatedAt = new DateTime('2011-11-11 11:11:11');
+		$entityThreeUpdatedAt = new DateTime('2010-10-10 10:10:10');
+		//Timestamps
+		$entityOne->setUpdatedAt($entityOneUpdatedAt);
+		$entityTwo->setUpdatedAt($entityTwoUpdatedAt);
+		$entityThree->setUpdatedAt($entityThreeUpdatedAt);
+
+		//ID
+		$entityOne->setID(1);
+		$entityTwo->setID(2);
+		$entityThree->setID(3);
+
+		//Dummy Value
+		$entityOne->setDummyStringValue('string1');
+		$entityTwo->setDummyStringValue('string2');
+		$entityThree->setDummyStringValue('string3');
+
+		$entityOne->setDummySlugValue('slug1');
+		$entityTwo->setDummySlugValue('slug2');
+		$entityThree->setDummySlugValue('slug3');
+		$collection->add($entityOne);
+		$collection->add($entityTwo);
+		$collection->add($entityThree);
+		$this->assertTrue($collection->massCall("setDummySlugValue", ["slugX"]));
+		foreach ($collection as $item) {
+			$this->assertEquals("slugX", $item->getDummySlugValue());
+		}
+		$revisedEntity1 = $collection->filterByFieldValue('getID', 1)->first();
+		$revisedEntity2 = $collection->filterByFieldValue('getID', 2)->first();
+		$revisedEntity3 = $collection->filterByFieldValue('getID', 3)->first();
+
+		$this->assertEquals('string1', $revisedEntity1->getDummyStringValue());
+		$this->assertEquals('string2', $revisedEntity2->getDummyStringValue());
+		$this->assertEquals('string3', $revisedEntity3->getDummyStringValue());
+	}
 }

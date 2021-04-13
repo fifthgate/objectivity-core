@@ -176,5 +176,45 @@ abstract class AbstractDomainEntityCollection implements DomainEntityCollectionI
             }
         }
     }
+
+    /**
+     * Call a method on a collection member.
+     *
+     * @param      int         $entityID    The entity id
+     * @param      string      $methodName  The method name
+     * @param      array|null  $arguments   An array of argument
+     *
+     * @return     bool        True if succesful, false if not.
+     */
+    public function call(int $entityID, string $methodName, ? array $arguments) : bool {
+        foreach ($this->collection as &$item) {
+            if ($item->getID() == $entityID) {
+                if (method_exists($item, $methodName)) {
+                    call_user_func_array([$item, $methodName], $arguments);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Call a method on ALL collection members, if possible.
+     *
+     * @param      string      $methodName  The method name
+     * @param      array|null  $arguments   The arguments
+     *
+     * @return     bool        True if at least one call was called, false if not.
+     */
+    public function massCall(string $methodName, ? array $arguments) : bool {
+        $hasCalled = false;
+        foreach ($this->collection as &$item) {
+            if (method_exists($item, $methodName)) {
+                call_user_func_array([$item, $methodName], $arguments);
+                $hasCalled = true;   
+            }
+        }
+        return $hasCalled;
+    }
 }
  

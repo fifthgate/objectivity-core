@@ -34,4 +34,8 @@ interface DomainEntityCollectionInterface extends Iterator
     public function filterByFieldValue(string $fieldGetMethodName, string $fieldValue) : ? DomainEntityCollectionInterface;
 
     public function replace(int $entityID, DomainEntityInterface $domainEntity);
+
+    public function call(int $entityID, string $methodName, ? array $arguments) : bool;
+
+    public function massCall(string $methodName, ? array $arguments) : bool;
 }

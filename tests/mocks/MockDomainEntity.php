@@ -9,6 +9,15 @@ class MockDomainEntity extends AbstractSoftDeletingDomainEntity implements Domai
 
 	protected string $dummyStringValue;
 
+	protected string $dummySlugValue;
+
+	public function setDummySlugValue(string $dummySlugValue) {
+		$this->dummySlugValue = $dummySlugValue;
+	}
+
+	public function getDummySlugValue() : string {
+		return $this->dummySlugValue;
+	}
 	public function setDummyStringValue(string $dummyStringValue) {
 		$this->dummyStringValue = $dummyStringValue;
 	}
