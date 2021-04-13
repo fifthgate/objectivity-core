@@ -220,6 +220,7 @@ class CollectionTest extends ObjectivityCoreTestCase {
 		$collection->add($entityThree);
 
 		$this->assertTrue($collection->call(2, "setDummyStringValue", ["stringX"]));
+		$this->assertFalse($collection->call(2, "completelyNonsensicalGetMethod", ["stringX"]));
 		$revisedEntity2 = $collection->filterByFieldValue('getID', 2)->first();
 		$this->assertEquals("stringX", $revisedEntity2->getDummyStringValue());
 	}
