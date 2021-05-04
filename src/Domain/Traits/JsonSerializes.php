@@ -56,6 +56,13 @@ trait JsonSerializes
         return $jsonArray;
     }
 
+    /**
+     * Turn a 'StudlyMethodName' into a 'studly_method_name' for use as an array key.
+     * 
+     * @param string $methodName The studly method name.
+     * 
+     * @return string The newly de-studified method name.
+     */
     protected function arrayifyName(string $methodName) : string
     {
         $trimmedName = substr($methodName, 3, strlen($methodName)-3);
@@ -84,6 +91,13 @@ trait JsonSerializes
     }
 
     //@codeCoverageIgnoreStart
+    /**
+     * Serializes a value for use in an array.
+     * 
+     * @param mixed $value The value to serialize
+     * 
+     * @return mixed The serialized value, if serialized it can, in fact, be.
+     */
     protected function serializeValue($value)
     {
         if (is_string($value) || is_numeric($value)) {

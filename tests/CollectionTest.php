@@ -5,7 +5,10 @@ namespace Fifthgate\Objectivity\Core\Tests;
 use Fifthgate\Objectivity\Core\Tests\Mocks\MockDomainEntityCollection;
 use \DateTime;
 use Fifthgate\Objectivity\Core\Tests\Mocks\MockDomainEntity;
-class CollectionTest extends ObjectivityCoreTestCase {
+use Fifthgate\Objectivity\Core\Tests\Mocks\MockSerializableDomainEntity;
+
+class CollectionTest extends ObjectivityCoreTestCase
+{
     
     public function testObjectIntegrity() {
         $collection = new MockDomainEntityCollection;
@@ -88,7 +91,8 @@ class CollectionTest extends ObjectivityCoreTestCase {
         $this->assertEquals(0, $collection->count());
     }
 
-    public function testHasKey() {
+    public function testHasKey()
+    {
         $collection = new MockDomainEntityCollection;
         $this->assertNull($collection->first());
         $this->assertNull($collection->last());
@@ -121,7 +125,8 @@ class CollectionTest extends ObjectivityCoreTestCase {
         $this->assertFalse($collection->hasItemWithFieldValue('completelymadeupmethod', 'dummy6'));
     }
 
-    public function testFilterByFieldValue() {
+    public function testFilterByFieldValue()
+    {
         $collection = new MockDomainEntityCollection;
 
         $entityOne = new MockDomainEntity;
@@ -150,7 +155,8 @@ class CollectionTest extends ObjectivityCoreTestCase {
         $this->assertNull($collection->filterByFieldValue('completelymadeupmethod', 'string1'));
     }
 
-    public function testReplace() {
+    public function testReplace()
+    {
         $collection = new MockDomainEntityCollection;
         $entityOne = new MockDomainEntity;
         $entityTwo = new MockDomainEntity;
@@ -190,7 +196,8 @@ class CollectionTest extends ObjectivityCoreTestCase {
 
     }
 
-    public function testCall() {
+    public function testCall()
+    {
         $collection = new MockDomainEntityCollection;
         $entityOne = new MockDomainEntity;
         $entityTwo = new MockDomainEntity;
@@ -225,7 +232,8 @@ class CollectionTest extends ObjectivityCoreTestCase {
         $this->assertEquals("stringX", $revisedEntity2->getDummyStringValue());
     }
 
-    public function testMassCall() {
+    public function testMassCall()
+    {
         $collection = new MockDomainEntityCollection;
         $entityOne = new MockDomainEntity;
         $entityTwo = new MockDomainEntity;
@@ -266,5 +274,67 @@ class CollectionTest extends ObjectivityCoreTestCase {
         $this->assertEquals('string1', $revisedEntity1->getDummyStringValue());
         $this->assertEquals('string2', $revisedEntity2->getDummyStringValue());
         $this->assertEquals('string3', $revisedEntity3->getDummyStringValue());
+    }
+
+    public function testSerialize()
+    {
+                $collection = new MockDomainEntityCollection;
+        $entityOne = new MockSerializableDomainEntity;
+        $entityTwo = new MockSerializableDomainEntity;
+        $entityThree = new MockSerializableDomainEntity;
+
+        $entityOneUpdatedAt = new DateTime('2012-12-12 12:12:12');
+        $entityTwoUpdatedAt = new DateTime('2011-11-11 11:11:11');
+        $entityThreeUpdatedAt = new DateTime('2010-10-10 10:10:10');
+        //Timestamps
+        $entityOne->setUpdatedAt($entityOneUpdatedAt);
+        $entityTwo->setUpdatedAt($entityTwoUpdatedAt);
+        $entityThree->setUpdatedAt($entityThreeUpdatedAt);
+
+        $entityOne->setCreatedAt($entityOneUpdatedAt);
+        $entityTwo->setCreatedAt($entityTwoUpdatedAt);
+        $entityThree->setCreatedAt($entityThreeUpdatedAt);
+
+        //ID
+        $entityOne->setID(1);
+        $entityTwo->setID(2);
+        $entityThree->setID(3);
+
+        //Dummy Value
+        $entityOne->setDummyStringValue('string1');
+        $entityTwo->setDummyStringValue('string2');
+        $entityThree->setDummyStringValue('string3');
+
+        $entityOne->setDummySlugValue('slug1');
+        $entityTwo->setDummySlugValue('slug2');
+        $entityThree->setDummySlugValue('slug3');
+        $collection->add($entityOne);
+        $collection->add($entityTwo);
+        $collection->add($entityThree);
+
+        $expected = [
+            1 => [
+                'dummy_string_value' => 'string1',
+                'dummy_slug_value' => 'slug1',
+                'created_at' => '2012-12-12 12:12:12',
+                'updated_at' => '2012-12-12 12:12:12',
+                'id' => 1
+            ],
+            2 => [
+                'dummy_string_value' => 'string2',
+                'dummy_slug_value' => 'slug2',
+                'created_at' => '2011-11-11 11:11:11',
+                'updated_at' => '2011-11-11 11:11:11',
+                'id' => 2
+            ],
+            3 => [
+                'dummy_string_value' => 'string3',
+                'dummy_slug_value' => 'slug3',
+                'created_at' => '2010-10-10 10:10:10',
+                'updated_at' => '2010-10-10 10:10:10',
+                'id' => 3
+            ]
+        ];
+        $this->assertEquals($expected, $collection->jsonSerialize());
     }
 }
