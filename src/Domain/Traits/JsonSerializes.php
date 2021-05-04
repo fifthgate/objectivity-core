@@ -67,6 +67,7 @@ trait JsonSerializes
         $studlyArray = array_values($studlyArray);
         $finalName = "";
 
+        //@codeCoverageIgnoreStart
         for (
             $i = 0;
             $i < count($studlyArray);
@@ -78,14 +79,17 @@ trait JsonSerializes
                 $finalName .= "_";
             }
         }
+        //@codeCoverageIgnoreEnd
         return $finalName;
     }
 
+    //@codeCoverageIgnoreStart
     protected function serializeValue($value)
     {
         if (is_string($value) || is_numeric($value)) {
             return $value;
         }
+        
         if (is_array($value)) {
             ksort($value);
             return $value;
@@ -94,9 +98,10 @@ trait JsonSerializes
         if ($value instanceof DateTimeInterface) {
             return $value->format('Y-m-d H:i:s');
         }
-        
+
         if ($value instanceof JsonSerializable) {
             return $value->jsonSerialize();
         }
     }
+    //@codeCoverageIgnoreEnd
 }
