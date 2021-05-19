@@ -10,7 +10,7 @@ trait JsonSerializesCollection
         $returnArray = [];
         foreach ($this->collection as $item) {
             if ($item instanceof JsonSerializable) {
-                $returnArray[$item->getID()] = $item->jsonSerialize();
+                $returnArray[] = $item->jsonSerialize();
             }
         }
         

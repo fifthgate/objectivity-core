@@ -313,21 +313,21 @@ class CollectionTest extends ObjectivityCoreTestCase
         $collection->add($entityThree);
 
         $expected = [
-            1 => [
+            0 => [
                 'dummy_string_value' => 'string1',
                 'dummy_slug_value' => 'slug1',
                 'created_at' => '2012-12-12 12:12:12',
                 'updated_at' => '2012-12-12 12:12:12',
                 'id' => 1
             ],
-            2 => [
+            1 => [
                 'dummy_string_value' => 'string2',
                 'dummy_slug_value' => 'slug2',
                 'created_at' => '2011-11-11 11:11:11',
                 'updated_at' => '2011-11-11 11:11:11',
                 'id' => 2
             ],
-            3 => [
+            2 => [
                 'dummy_string_value' => 'string3',
                 'dummy_slug_value' => 'slug3',
                 'created_at' => '2010-10-10 10:10:10',

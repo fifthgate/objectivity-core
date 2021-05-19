@@ -46,11 +46,11 @@ trait JsonSerializes
         
         $jsonArray = [
             "id" => $this->getID(),
-            "created_at" => $this->createdAt,
-            "updated_at" => $this->updatedAt
+            "created_at" => $this->createdAt->format('Y-m-d H:i:s'),
+            "updated_at" => $this->updatedAt->format('Y-m-d H:i:s')
         ];
         if (property_exists($this, "deleted_at")) {
-            $jsonArray['deleted_at'] = $this->deletedAt;
+            $jsonArray['deleted_at'] = $this->deletedAt->format('Y-m-d H:i:s');
         }
         foreach ($methods as $methodName) {
             //Check if method begins with 'get';
