@@ -36,13 +36,25 @@ trait JsonSerializes
      */
     public function jsonSerialize()
     {
-        $methods = get_class_methods($this);
-        $jsonArray = [
-            "id" => $this->getID()
+        $excludedMethods = [
+            "getID",
+            "getCreatedAt",
+            "getUpdatedAt",
+            "getUpdatedAt"
         ];
+        $methods = get_class_methods($this);
+        
+        $jsonArray = [
+            "id" => $this->getID(),
+            "created_at" => $this->createdAt,
+            "updated_at" => $this->updatedAt
+        ];
+        if (property_exists($this, "deleted_at")) {
+            $jsonArray['deleted_at'] = $this->deletedAt;
+        }
         foreach ($methods as $methodName) {
             //Check if method begins with 'get';
-            if (substr($methodName, 0, 3) === "get" && $methodName !== "getID") {
+            if (substr($methodName, 0, 3) === "get" && !in_array($methodName, $excludedMethods)) {
                 $reflection = new ReflectionMethod($this, $methodName);
                 if ($reflection->isPublic()) {
                     $jsonArray[$this->arrayifyName($methodName)] = $this->serializeValue($this->$methodName());
