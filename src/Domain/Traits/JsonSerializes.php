@@ -45,12 +45,16 @@ trait JsonSerializes
         $methods = get_class_methods($this);
         
         $jsonArray = [
-            "id" => $this->getID(),
-            "created_at" => $this->createdAt->format('Y-m-d H:i:s'),
-            "updated_at" => $this->updatedAt->format('Y-m-d H:i:s')
+            "id" => $this->getID()
         ];
-        if (property_exists($this, "deleted_at")) {
-            $jsonArray['deleted_at'] = $this->deletedAt->format('Y-m-d H:i:s');
+        if (property_exists($this, "created_at") && $this->created_at != null) {
+            $jsonArray['created_at'] = $this->created_at->format('Y-m-d H:i:s');
+        }
+        if (property_exists($this, "updated_at") && $this->updatedAt != null) {
+            $jsonArray['updated_at'] = $this->created_at->format('Y-m-d H:i:s');
+        }
+        if (property_exists($this, "deleted_at") && $this->deleted_at != null) {
+            $jsonArray['deleted_at'] = $this->deleted_at->format('Y-m-d H:i:s');
         }
         foreach ($methods as $methodName) {
             //Check if method begins with 'get';
