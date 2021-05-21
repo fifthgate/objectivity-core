@@ -3,7 +3,7 @@
 namespace Fifthgate\Objectivity\Core\Domain\Collection;
 
 use Fifthgate\Objectivity\Core\Domain\Collection\Interfaces\DomainEntityCollectionInterface;
-
+use Fifthgate\Objectivity\Core\Domain\Collection\Exceptions\InvalidMassCallException;
 use Fifthgate\Objectivity\Core\Domain\Interfaces\DomainEntityInterface;
 
 
@@ -206,13 +206,16 @@ abstract class AbstractDomainEntityCollection implements DomainEntityCollectionI
      *
      * @return     bool        True if at least one call was called, false if not.
      */
-    public function massCall(string $methodName, ? array $arguments) : bool {
+    public function massCall(string $methodName, ? array $arguments, bool $throwException = false) : bool {
         $hasCalled = false;
         foreach ($this->collection as &$item) {
             if (method_exists($item, $methodName)) {
                 call_user_func_array([$item, $methodName], $arguments);
                 $hasCalled = true;   
             }
+        }
+        if ($throwException && !$hasCalled) {
+            throw new InvalidMassCallException;
         }
         return $hasCalled;
     }
