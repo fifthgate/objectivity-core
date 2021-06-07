@@ -17,7 +17,7 @@ abstract class AbstractIterator implements Iterator
     /**
      * Create a new instance
      *
-     * @param array $collection An array of items to form the collection. Optional.s
+     * @param array $collection An array of items to form the collection. Optional.
      *
      * @return void
      */
@@ -94,5 +94,25 @@ abstract class AbstractIterator implements Iterator
             return true;
         }
         return false;
+    }
+
+     /**
+     * Is this collection empty?
+     *
+     * @return boolean True or false
+     */
+    public function isEmpty() : bool
+    {
+        return empty($this->collection);
+    }
+
+     /**
+     * Empty the collection
+     *
+     * @return void
+     */
+    public function flush()
+    {
+        $this->collection = [];
     }
 }

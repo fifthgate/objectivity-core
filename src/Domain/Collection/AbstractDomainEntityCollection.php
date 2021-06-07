@@ -13,23 +13,6 @@ abstract class AbstractDomainEntityCollection extends AbstractIterator implement
 
     protected $position;
 
-    //@codeCoverageIgnoreStart
-    /**
-     * Create a new instance
-     *
-     * @param array $collection An array of items to form the collection. Optional.s
-     *
-     * @return void
-     */
-    public function __construct(array $collection = [])
-    {
-        $this->position = 0;
-        if (!empty($collection)) {
-            $this->collection = $collection;
-        }
-    }
-    //@codeCoverageIgnoreEnd
-
     /**
      * Add an item to the end of the colleciton
      *
@@ -40,26 +23,6 @@ abstract class AbstractDomainEntityCollection extends AbstractIterator implement
     public function add(DomainEntityInterface $domainEntity)
     {
         $this->collection[] = $domainEntity;
-    }
-
-    /**
-     * Is this collection empty?
-     *
-     * @return boolean True or false
-     */
-    public function isEmpty() : bool
-    {
-        return empty($this->collection);
-    }
-
-    /**
-     * Empty the collection
-     *
-     * @return void
-     */
-    public function flush()
-    {
-        $this->collection = [];
     }
 
     /**
