@@ -5,9 +5,9 @@ namespace Fifthgate\Objectivity\Core\Domain\Collection;
 use Fifthgate\Objectivity\Core\Domain\Collection\Interfaces\DomainEntityCollectionInterface;
 use Fifthgate\Objectivity\Core\Domain\Collection\Exceptions\InvalidMassCallException;
 use Fifthgate\Objectivity\Core\Domain\Interfaces\DomainEntityInterface;
+use Fifthgate\Objectivity\Core\Domain\Collection\AbstractIterator;
 
-
-abstract class AbstractDomainEntityCollection implements DomainEntityCollectionInterface
+abstract class AbstractDomainEntityCollection extends AbstractIterator implements DomainEntityCollectionInterface
 {
     protected $collection = [];
 
@@ -16,7 +16,7 @@ abstract class AbstractDomainEntityCollection implements DomainEntityCollectionI
     //@codeCoverageIgnoreStart
     /**
      * Create a new instance
-     * 
+     *
      * @param array $collection An array of items to form the collection. Optional.s
      *
      * @return void
@@ -31,58 +31,8 @@ abstract class AbstractDomainEntityCollection implements DomainEntityCollectionI
     //@codeCoverageIgnoreEnd
 
     /**
-     * Reset the internal pointer position.
-     * 
-     * @return void
-     */
-    public function rewind()
-    {
-        $this->position = 0;
-    }
-
-    /**
-     * Get the item in the current position.
-     * 
-     * @return DomainEntityInterface
-     */
-    public function current()
-    {
-        return $this->collection[$this->position];
-    }
-
-    /**
-     * Get the current position
-     * 
-     * @return mixed position
-     */
-    public function key()
-    {
-        return $this->position;
-    }
-
-    /**
-     * Advance iterator to new item
-     * 
-     * @return void
-     */
-    public function next()
-    {
-        $this->position++;
-    }
-
-    /**
-     * Is the attempted delta valid?
-     * 
-     * @return bool
-     */
-    public function valid()
-    {
-        return isset($this->collection[$this->position]);
-    }
-
-    /**
      * Add an item to the end of the colleciton
-     * 
+     *
      * @param DomainEntityInterface $domainEntity The item to be added
      *
      * @return void
@@ -94,9 +44,9 @@ abstract class AbstractDomainEntityCollection implements DomainEntityCollectionI
 
     /**
      * Delete an item from the collection
-     * 
+     *
      * @param int $key The delta of the item to be deleted.
-     * 
+     *
      * @return bool True if sucessfully deleted, false otherwise.
      */
     public function delete($key) : bool
@@ -110,7 +60,7 @@ abstract class AbstractDomainEntityCollection implements DomainEntityCollectionI
 
     /**
      * Is this collection empty?
-     * 
+     *
      * @return boolean True or false
      */
     public function isEmpty() : bool
@@ -120,7 +70,7 @@ abstract class AbstractDomainEntityCollection implements DomainEntityCollectionI
 
     /**
      * Empty the collection
-     * 
+     *
      * @return void
      */
     public function flush()
@@ -130,9 +80,9 @@ abstract class AbstractDomainEntityCollection implements DomainEntityCollectionI
 
     /**
      * Sort the collection using usert and a callable (Usuaully a closure)
-     * 
+     *
      * @param callable $sortRoutine A callable routine obeying usort return rules.
-     * 
+     *
      * @return DomainEntityCollectionInterface This collection, as usort works on the original array rather than a coppy.
      */
     public function sortCollection(callable $sortRoutine) : DomainEntityCollectionInterface
@@ -143,9 +93,9 @@ abstract class AbstractDomainEntityCollection implements DomainEntityCollectionI
 
     /**
      * Arbitrarily filter the collection using a callable.
-     * 
+     *
      * @param callable $filterRoutine A callable filter routine. Should return TRUE if the item belongs in the collection, false if not. Receives the complete item as a parameter.
-     * 
+     *
      * @return DomainEntityCollectionInterface A freshly filtered collection
      */
     public function filter(callable $filterRoutine) : DomainEntityCollectionInterface
@@ -161,9 +111,9 @@ abstract class AbstractDomainEntityCollection implements DomainEntityCollectionI
 
     /**
      * Slice the array into chunks
-     * 
+     *
      * @param int $length The length of the array
-     * 
+     *
      * @return array the chunked collection
      */
     public function slice(int $length) : array
@@ -173,12 +123,13 @@ abstract class AbstractDomainEntityCollection implements DomainEntityCollectionI
 
     /**
      * Get the first N items in the collection as currently sorted.
-     * 
+     *
      * @param int $length How many items do you want?
-     * 
+     *
      * @return array The first n items in the collection.
      */
-    public function getFirstN(int $length) {
+    public function getFirstN(int $length)
+    {
         $collection = new $this;
         $items = $this->slice($length);
         $items = reset($items);
@@ -190,9 +141,9 @@ abstract class AbstractDomainEntityCollection implements DomainEntityCollectionI
 
     /**
      * Does the collection contain an item with the ID $id?
-     * 
+     *
      * @param int $id The ID to search for
-     * 
+     *
      * @return boolean true if the item is present, false otherwise.
      */
     public function hasID(int $id) :bool
@@ -207,7 +158,7 @@ abstract class AbstractDomainEntityCollection implements DomainEntityCollectionI
 
     /**
      * Get the first item in the collection, as currently sorted.
-     * 
+     *
      * @return DomainEntityInterface The First item in the collection
      */
     public function first() : ? DomainEntityInterface
@@ -223,7 +174,7 @@ abstract class AbstractDomainEntityCollection implements DomainEntityCollectionI
 
     /**
      * Get the last item in the collection, as currently sorted.
-     * 
+     *
      * @return DomainEntityInterface The last item in the collection
      */
     public function last() : ? DomainEntityInterface
@@ -238,7 +189,7 @@ abstract class AbstractDomainEntityCollection implements DomainEntityCollectionI
 
     /**
      * Get the number of items in the collection
-     * 
+     *
      * @return int The number of items in the collection.
      */
     public function count() : int
@@ -252,13 +203,14 @@ abstract class AbstractDomainEntityCollection implements DomainEntityCollectionI
 
     /**
      * Does the collection have an item with this field value?
-     * 
+     *
      * @param string $fieldGetMethodName The name of the Get Method to call to determine the field's value
      * @param string $fieldValue         The value of the field.
-     * 
+     *
      * @return boolean true/false
      */
-    public function hasItemWithFieldValue(string $fieldGetMethodName, string $fieldValue) : bool {
+    public function hasItemWithFieldValue(string $fieldGetMethodName, string $fieldValue) : bool
+    {
         foreach ($this->collection as $item) {
             if (!method_exists($item, $fieldGetMethodName)) {
                 continue;
@@ -272,13 +224,14 @@ abstract class AbstractDomainEntityCollection implements DomainEntityCollectionI
 
     /**
      * Filter the collection for all items with a given field value.
-     * 
+     *
      * @param string $fieldGetMethodName The name of the Get Method to call to determine the field's value
      * @param string $fieldValue         The value of the field.
-     * 
+     *
      * @return DomainEntityCollectionInterface|null A new collection containing only the filtered items, or null if there was no result.
      */
-    public function filterByFieldValue(string $fieldGetMethodName, string $fieldValue) : ? DomainEntityCollectionInterface {
+    public function filterByFieldValue(string $fieldGetMethodName, string $fieldValue) : ? DomainEntityCollectionInterface
+    {
         $filteredCollection = new $this;
         foreach ($this->collection as $item) {
             if (!method_exists($item, $fieldGetMethodName)) {
@@ -293,13 +246,14 @@ abstract class AbstractDomainEntityCollection implements DomainEntityCollectionI
 
     /**
      * Replace an item in the collection by ID
-     * 
+     *
      * @param int                   $entityID     The ID of the entity to be replaced.
      * @param DomainEntityInterface $domainEntity The replacement entity
-     * 
+     *
      * @return void
      */
-    public function replace(int $entityID, DomainEntityInterface $domainEntity) {
+    public function replace(int $entityID, DomainEntityInterface $domainEntity)
+    {
         foreach ($this->collection as $delta => $item) {
             if ($item->getID() == $entityID && $item->getID() !== 0) {
                 $this->collection[$delta] = $domainEntity;
@@ -316,7 +270,8 @@ abstract class AbstractDomainEntityCollection implements DomainEntityCollectionI
      *
      * @return bool True if succesful, false if not.
      */
-    public function call(int $entityID, string $methodName, ? array $arguments) : bool {
+    public function call(int $entityID, string $methodName, ? array $arguments) : bool
+    {
         foreach ($this->collection as &$item) {
             if ($item->getID() == $entityID) {
                 if (method_exists($item, $methodName)) {
@@ -337,12 +292,13 @@ abstract class AbstractDomainEntityCollection implements DomainEntityCollectionI
      *
      * @return bool      True if at least one call was called, false if not.
      */
-    public function massCall(string $methodName, ? array $arguments, bool $throwException = false) : bool {
+    public function massCall(string $methodName, ? array $arguments, bool $throwException = false) : bool
+    {
         $hasCalled = false;
         foreach ($this->collection as &$item) {
             if (method_exists($item, $methodName)) {
                 call_user_func_array([$item, $methodName], $arguments);
-                $hasCalled = true;   
+                $hasCalled = true;
             }
         }
         if ($throwException && !$hasCalled) {
@@ -353,12 +309,13 @@ abstract class AbstractDomainEntityCollection implements DomainEntityCollectionI
 
     /**
      * Get an Item from the collection by ID
-     * 
+     *
      * @param int $id The ID to search for.
-     * 
+     *
      * @return DomainEntityInterface|null The Item, or null if not found.
      */
-    public function getItemByID(int $id) : ? DomainEntityInterface {
+    public function getItemByID(int $id) : ? DomainEntityInterface
+    {
         foreach ($this->collection as $item) {
             if ($item->getID() != null && $item->getID() === $id) {
                 return $item;
@@ -366,6 +323,4 @@ abstract class AbstractDomainEntityCollection implements DomainEntityCollectionI
         }
         return null;
     }
-
 }
- 
