@@ -43,22 +43,6 @@ abstract class AbstractDomainEntityCollection extends AbstractIterator implement
     }
 
     /**
-     * Delete an item from the collection
-     *
-     * @param int $key The delta of the item to be deleted.
-     *
-     * @return bool True if sucessfully deleted, false otherwise.
-     */
-    public function delete($key) : bool
-    {
-        if (isset($this->collection[$key])) {
-            unset($this->collection[$key]);
-            return true;
-        }
-        return false;
-    }
-
-    /**
      * Is this collection empty?
      *
      * @return boolean True or false
