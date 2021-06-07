@@ -135,20 +135,6 @@ abstract class AbstractDomainEntityCollection extends AbstractIterator implement
     }
 
     /**
-     * Get the number of items in the collection
-     *
-     * @return int The number of items in the collection.
-     */
-    public function count() : int
-    {
-        $i = 0;
-        foreach ($this->collection as $item) {
-            $i++;
-        }
-        return $i;
-    }
-
-    /**
      * Does the collection have an item with this field value?
      *
      * @param string $fieldGetMethodName The name of the Get Method to call to determine the field's value

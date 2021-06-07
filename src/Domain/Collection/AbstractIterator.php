@@ -115,4 +115,19 @@ abstract class AbstractIterator implements Iterator
     {
         $this->collection = [];
     }
+
+    
+    /**
+     * Get the number of items in the collection
+     *
+     * @return int The number of items in the collection.
+     */
+    public function count() : int
+    {
+        $i = 0;
+        foreach ($this->collection as $item) {
+            $i++;
+        }
+        return $i;
+    }
 }
