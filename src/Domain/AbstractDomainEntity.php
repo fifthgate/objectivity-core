@@ -21,6 +21,11 @@ abstract class AbstractDomainEntity implements DomainEntityInterface, Timestampi
         return ((!$this->hash) or ($this->hash != $this->hashSelf()));
     }
 
+    public function clearID()
+    {
+        $this->id = null;
+    }
+
     public function hashSelf() : string
     {
         $vars = get_object_vars($this);
@@ -58,5 +63,10 @@ abstract class AbstractDomainEntity implements DomainEntityInterface, Timestampi
     public function getUpdatedAt() : DateTimeInterface
     {
         return $this->updatedAt;
+    }
+
+    public function __clone()
+    {
+        $this->clearID();
     }
 }

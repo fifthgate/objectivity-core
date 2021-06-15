@@ -6,9 +6,11 @@ use Fifthgate\Objectivity\Core\Tests\Mocks\MockDomainEntity;
 use Fifthgate\Objectivity\Core\Tests\Mocks\MockSerializableDomainEntity;
 use \DateTime;
 
-class EntityTest extends ObjectivityCoreTestCase {
+class EntityTest extends ObjectivityCoreTestCase
+{
     
-    public function testObjectIntegrity() {
+    public function testObjectIntegrity()
+    {
         $domainEntity = new MockDomainEntity;
         $domainEntity->setID(987);
 
@@ -38,6 +40,8 @@ class EntityTest extends ObjectivityCoreTestCase {
         $domainEntity->setDummySlugValue("dummy_slug");
         $this->assertEquals("dummy_slug", $domainEntity->getDummySlugValue());
 
+        $domainEntity->clearID();
+        $this->assertNull($domainEntity->getID());
     }
 
     public function testSerialization()
@@ -56,6 +60,26 @@ class EntityTest extends ObjectivityCoreTestCase {
             'dummy_string_value' => 'dummyString',
             'dummy_slug_value' => 'dummy_slug'
         ];
-        $this->assertEquals($expected,  $domainEntity->jsonSerialize());
+        $this->assertEquals($expected, $domainEntity->jsonSerialize());
+    }
+
+    public function testClone()
+    {
+        $domainEntity = new MockDomainEntity;
+        $domainEntity->setID(987);
+        $createdAt = new DateTime('2009-10-13 09:09:09');
+        $domainEntity->setCreatedAt($createdAt);
+        $updatedAt = new DateTime('2009-10-14 09:09:09');
+        $domainEntity->setUpdatedAt($updatedAt);
+        $domainEntity->hashSelf();
+        $newUpdatedAt = new DateTime('2009-10-15 09:09:09');
+        $domainEntity->setUpdatedAt($newUpdatedAt);
+        $deletedAt = new DateTime('2009-10-16 09:09:09');
+        $domainEntity->setDeletedAt($deletedAt);
+        $domainEntity->setDummyStringValue('dummy');
+        $domainEntity->setDummySlugValue("dummy_slug");
+
+        $clonedEntity = clone $domainEntity;
+        $this->assertNull($clonedEntity->getID());
     }
 }

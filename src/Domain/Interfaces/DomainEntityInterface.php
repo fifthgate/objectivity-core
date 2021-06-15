@@ -6,6 +6,8 @@ use \DateTimeInterface;
 
 interface DomainEntityInterface
 {
+    public function clearID();
+
     public function getID();
 
     public function isDirty() : bool;
