@@ -35,8 +35,9 @@ trait ShadowsValues
             if (isset($this->shadowValues[$shadowName])) {
                 unset($this->shadowValues[$shadowName]);
             }
+        } else {
+            throw new ShadowValueException("'{$shadowName}' is not a shadowable value!");
         }
-        throw new ShadowValueException("'{$shadowName}' is not a shadowable value!");
     }
 
     abstract public function isShadowableValue(string $shadowName) : bool;
