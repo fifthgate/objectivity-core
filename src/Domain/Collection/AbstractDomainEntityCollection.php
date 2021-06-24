@@ -83,7 +83,7 @@ abstract class AbstractDomainEntityCollection extends AbstractIterator implement
         if (!empty($items)) {
             foreach ($items as $item) {
                 $collection->add($item);
-            }    
+            }
         }
         
         return $collection;
