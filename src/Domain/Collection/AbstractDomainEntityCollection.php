@@ -220,17 +220,17 @@ abstract class AbstractDomainEntityCollection extends AbstractIterator implement
      * Call a method on ALL collection members, if possible.
      *
      * @param string     $methodName     The method name
-     * @param array|null $arguments      The arguments
+     * @param array      $arguments      The arguments
      * @param bool       $throwException Whether or not to throw an exception if the call cannot be executed on ANY member,
      *
      * @return bool      True if at least one call was called, false if not.
      */
-    public function massCall(string $methodName, ? array $arguments, bool $throwException = false) : bool
+    public function massCall(string $methodName, array $arguments = [], bool $throwException = false) : bool
     {
         $hasCalled = false;
         foreach ($this->collection as &$item) {
             if (method_exists($item, $methodName)) {
-                call_user_func_array([$item, $methodName], $arguments);
+                call_user_func_array([$item, $methodName], !empty($arguments) ? $arguments : null);
                 $hasCalled = true;
             }
         }
