@@ -80,9 +80,12 @@ abstract class AbstractDomainEntityCollection extends AbstractIterator implement
         $collection = new $this;
         $items = $this->slice($length);
         $items = reset($items);
-        foreach ($items as $item) {
-            $collection->add($item);
+        if (!empty($items)) {
+            foreach ($items as $item) {
+                $collection->add($item);
+            }
         }
+        
         return $collection;
     }
 

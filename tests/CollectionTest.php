@@ -413,4 +413,10 @@ class CollectionTest extends ObjectivityCoreTestCase
 
         $this->assertEquals($collection->getItemByID(2), $entityTwo);
     }
+
+    public function testFirstNEdgeCase()
+    {
+        $collection = new MockDomainEntityCollection;
+        $this->assertTrue($collection->getFirstN(1)->isEmpty());
+    }
 }
