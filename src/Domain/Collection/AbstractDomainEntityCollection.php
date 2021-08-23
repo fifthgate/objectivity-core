@@ -231,15 +231,18 @@ abstract class AbstractDomainEntityCollection extends AbstractIterator implement
     public function massCall(string $methodName, array $arguments = [], bool $throwException = false) : bool
     {
         $hasCalled = false;
-        foreach ($this->collection as &$item) {
-            if (method_exists($item, $methodName)) {
-                call_user_func_array([$item, $methodName], !empty($arguments) ? $arguments : null);
-                $hasCalled = true;
+        if (!empty($this->collection)) {
+            foreach ($this->collection as &$item) {
+                if (method_exists($item, $methodName)) {
+                    call_user_func_array([$item, $methodName], !empty($arguments) ? $arguments : null);
+                    $hasCalled = true;
+                }
+            }
+            if ($throwException && !$hasCalled) {
+                throw new InvalidMassCallException;
             }
         }
-        if ($throwException && !$hasCalled) {
-            throw new InvalidMassCallException;
-        }
+        
         return $hasCalled;
     }
 

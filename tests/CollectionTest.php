@@ -11,7 +11,8 @@ use Fifthgate\Objectivity\Core\Domain\Collection\Exceptions\InvalidMassCallExcep
 class CollectionTest extends ObjectivityCoreTestCase
 {
     
-    public function testObjectIntegrity() {
+    public function testObjectIntegrity()
+    {
         $collection = new MockDomainEntityCollection;
         $this->assertNull($collection->first());
         $this->assertNull($collection->last());
@@ -68,7 +69,7 @@ class CollectionTest extends ObjectivityCoreTestCase
         $this->assertEquals(2, $collection->count());
         $this->assertFalse($collection->delete(5));
 
-        $collection->sortCollection(function ($a, $b){
+        $collection->sortCollection(function ($a, $b) {
             if ($a > $b) {
                 return -1;
             }
@@ -194,7 +195,6 @@ class CollectionTest extends ObjectivityCoreTestCase
         $revisedEntity2 = $collection->filterByFieldValue('getDummyStringValue', 'string2Revised')->first();
         $this->assertEquals(2, $revisedEntity2->getID());
         $this->assertEquals($entityTwoUpdatedAt, $revisedEntity2->getUpdatedAt());
-
     }
 
     public function testCall()
@@ -311,6 +311,13 @@ class CollectionTest extends ObjectivityCoreTestCase
 
         $this->expectException(InvalidMassCallException::class);
         $collection->massCall("setNonnsensicalRunner", ["slugX"], true);
+    }
+
+    //Hotfix reversion check.
+    public function testEmptyMassCall()
+    {
+        $collection = new MockDomainEntityCollection;
+        $this->assertFalse($collection->massCall("setNonnsensicalRunner", ["slugX"], true));
     }
 
     public function testSerialize()
