@@ -127,6 +127,18 @@ class CollectionTest extends ObjectivityCoreTestCase
         $this->assertFalse($collection->hasItemWithFieldValue('completelymadeupmethod', 'dummy6'));
     }
 
+    public function testEmptyHasKey()
+    {
+        $collection = new MockDomainEntityCollection;
+        $this->assertFalse($collection->hasItemWithFieldValue('getDummyStringValue', 'dummy5'));
+    }
+
+    public function testEmptyCall()
+    {
+        $collection = new MockDomainEntityCollection;
+        $this->assertFalse($collection->call(2, "setDummyStringValue", ["stringX"]));
+    }
+
     public function testFilterByFieldValue()
     {
         $collection = new MockDomainEntityCollection;
@@ -320,6 +332,12 @@ class CollectionTest extends ObjectivityCoreTestCase
         $this->assertFalse($collection->massCall("setNonnsensicalRunner", ["slugX"], true));
     }
 
+    public function testEmptyFirstAndLast()
+    {
+        $collection = new MockDomainEntityCollection;
+        $this->assertNull($collection->first());
+        $this->assertNull($collection->last());
+    }
     public function testSerialize()
     {
         $collection = new MockDomainEntityCollection;

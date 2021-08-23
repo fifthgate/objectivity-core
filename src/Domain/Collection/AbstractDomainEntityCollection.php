@@ -26,11 +26,11 @@ abstract class AbstractDomainEntityCollection extends AbstractIterator implement
     }
 
     /**
-     * Sort the collection using usert and a callable (Usuaully a closure)
+     * Sort the collection using usort and a callable (Usuaully a closure)
      *
      * @param callable $sortRoutine A callable routine obeying usort return rules.
      *
-     * @return DomainEntityCollectionInterface This collection, as usort works on the original array rather than a coppy.
+     * @return DomainEntityCollectionInterface This collection, as usort works on the original array rather than a copy.
      */
     public function sortCollection(callable $sortRoutine) : DomainEntityCollectionInterface
     {
@@ -109,7 +109,7 @@ abstract class AbstractDomainEntityCollection extends AbstractIterator implement
     /**
      * Get the first item in the collection, as currently sorted.
      *
-     * @return DomainEntityInterface The First item in the collection
+     * @return DomainEntityInterface|Null The First item in the collection, or null if collection is empty.
      */
     public function first() : ? DomainEntityInterface
     {
