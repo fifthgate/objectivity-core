@@ -40,4 +40,6 @@ interface DomainEntityCollectionInterface extends Iterator
     public function massCall(string $methodName, array $arguments = [], bool $throwException = false) : bool;
 
     public function getItemByID(int $id) : ? DomainEntityInterface;
+
+    public function getNth(int $n) : ? DomainEntityInterface;
 }

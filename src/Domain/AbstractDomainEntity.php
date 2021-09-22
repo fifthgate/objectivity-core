@@ -10,7 +10,7 @@ abstract class AbstractDomainEntity implements DomainEntityInterface, Timestampi
 {
     protected $id = null;
 
-    protected $createdAt;
+    protected DateTimeInterface $createdAt;
 
     protected $updatedAt;
 

@@ -262,4 +262,16 @@ abstract class AbstractDomainEntityCollection extends AbstractIterator implement
         }
         return null;
     }
+
+    public function getNth(int $n) : ? DomainEntityInterface
+    {
+        $i = 1;
+        foreach ($this->collection as $item) {
+            if ($i == $n) {
+                return $item;
+            }
+            $i++;
+        }
+        return null;
+    }
 }
