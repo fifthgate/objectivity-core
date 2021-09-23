@@ -263,6 +263,12 @@ abstract class AbstractDomainEntityCollection extends AbstractIterator implement
         return null;
     }
 
+    /**
+     * Get the Nth item in the collection as currently sorted.
+     *
+     * @param  int    $n The value of N.
+     * @return DomainEntityInterface|null The Nth Item, or null if no such item exists.
+     */
     public function getNth(int $n) : ? DomainEntityInterface
     {
         $i = 1;
@@ -273,5 +279,21 @@ abstract class AbstractDomainEntityCollection extends AbstractIterator implement
             $i++;
         }
         return null;
+    }
+
+    /**
+     * Get an array of all the Entity IDs currently in the collection.
+     * Note, if this collection contains entity of more than one type, there is a possibility of IDs being duplicated.
+     * Try filtering y entity type first.
+     *
+     * @return array An array of IDs
+     */
+    public function getIDs() : array
+    {
+        $ids = [];
+        foreach ($this->collection as $item) {
+            $ids[] = $item->getID();
+        }
+        return $ids;
     }
 }
