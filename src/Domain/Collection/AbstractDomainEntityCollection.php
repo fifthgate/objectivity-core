@@ -296,4 +296,17 @@ abstract class AbstractDomainEntityCollection extends AbstractIterator implement
         }
         return $ids;
     }
+
+    /**
+     * Get a random entry from the collection
+     */
+    public function random() : ? DomainEntityInterface
+    {
+        if (!$this->isEmpty()) {
+            $randomKey = array_rand($this->collection);
+            return $this->collection[$randomKey];
+        }
+        return null;
+        
+    }
 }

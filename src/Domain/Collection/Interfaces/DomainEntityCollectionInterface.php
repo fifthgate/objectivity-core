@@ -171,4 +171,9 @@ interface DomainEntityCollectionInterface extends Iterator
      * @return array An array of IDs
      */
     public function getIDs() : array;
+
+    /**
+     * Get a random entry from the collection
+     */
+    public function random() : ? DomainEntityInterface;
 }
