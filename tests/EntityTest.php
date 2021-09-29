@@ -65,6 +65,24 @@ class EntityTest extends ObjectivityCoreTestCase
         $this->assertEquals($expected, $domainEntity->jsonSerialize());
     }
 
+    public function testSerializationWithExcludedMethods()
+    {
+        $domainEntity = new MockSerializableDomainEntity;
+        $domainEntity->setID(987);
+        $updatedAt = new DateTime('2009-10-14 09:09:09');
+        $domainEntity->setUpdatedAt($updatedAt);
+        $domainEntity->setCreatedAt($updatedAt);
+        $domainEntity->setDummyStringValue("dummyString");
+        $domainEntity->setDummySlugValue("dummy_slug");
+        $expected = [
+            'id' => 987,
+            'updated_at' => '2009-10-14 09:09:09',
+            'created_at' => '2009-10-14 09:09:09',
+            'dummy_string_value' => 'dummyString'
+        ];
+        $this->assertEquals($expected, $domainEntity->jsonSerialize(["getDummySlugValue"]));
+    }
+
     public function testClone()
     {
         $domainEntity = new MockDomainEntity;
