@@ -9,8 +9,9 @@ use \DateTimeInterface;
 use Fifthgate\Objectivity\Core\Domain\Interfaces\TimestampingDomainEntityInterface;
 use Fifthgate\Objectivity\Core\Domain\AbstractDomainEntity;
 use Fifthgate\Objectivity\Core\Domain\Traits\JsonSerializes;
+use JsonSerializable;
 
-abstract class AbstractSerializableDomainEntity extends AbstractDomainEntity implements DomainEntityInterface, TimestampingDomainEntityInterface
+abstract class AbstractSerializableDomainEntity extends AbstractDomainEntity implements DomainEntityInterface, TimestampingDomainEntityInterface, JsonSerializable
 
 {
     use JsonSerializes;
