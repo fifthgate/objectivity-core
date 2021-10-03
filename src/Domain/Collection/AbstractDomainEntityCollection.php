@@ -256,7 +256,7 @@ abstract class AbstractDomainEntityCollection extends AbstractIterator implement
     public function getItemByID(int $id) : ? DomainEntityInterface
     {
         foreach ($this->collection as $item) {
-            if ($item->getID() != null && $item->getID() === $id) {
+            if ($item->getID() != null && (int) $item->getID() === $id) {
                 return $item;
             }
         }
