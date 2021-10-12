@@ -54,13 +54,13 @@ trait JsonSerializes
         $jsonArray = [
             "id" => $this->getID()
         ];
-        if (property_exists($this, "createdAt") && $this->createdAt != null) {
+        if (property_exists($this, "createdAt") && isset($this->createdAt) && $this->createdAt != null) {
             $jsonArray['created_at'] = $this->createdAt->format('Y-m-d H:i:s');
         }
-        if (property_exists($this, "updatedAt") && $this->updatedAt != null) {
+        if (property_exists($this, "updatedAt") && isset($this->updatedAt) && $this->updatedAt != null) {
             $jsonArray['updated_at'] = $this->updatedAt->format('Y-m-d H:i:s');
         }
-        if (property_exists($this, "deletedAt") && $this->deletedAt != null) {
+        if (property_exists($this, "deletedAt") && isset($this->deletedAt) && $this->deletedAt != null) {
             $jsonArray['deleted_at'] = $this->deletedAt->format('Y-m-d H:i:s');
         }
         foreach ($methods as $methodName) {
