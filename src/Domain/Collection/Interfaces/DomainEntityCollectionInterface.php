@@ -176,4 +176,22 @@ interface DomainEntityCollectionInterface extends Iterator
      * Get a random entry from the collection
      */
     public function random() : ? DomainEntityInterface;
+
+    /**
+     * Remove an entity from the collection.
+     *
+     * @param DomainEntityInterface $item The item to remove from the collection
+     *
+     * @return bool true if the item was succesfully removed, or false if the item was not present in the collection
+     */
+    public function remove(DomainEntityInterface $item) : bool;
+
+    /**
+     * Remove an entity from the collection by id.
+     *
+     * @param int $id The ID of the item to remove from the collection
+     *
+     * @return bool true if the item was succesfully removed, or false if the item was not present in the collection
+     */
+    public function removeByID(int $itemID) : bool;
 }

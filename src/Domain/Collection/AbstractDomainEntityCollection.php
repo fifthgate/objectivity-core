@@ -307,6 +307,43 @@ abstract class AbstractDomainEntityCollection extends AbstractIterator implement
             return $this->collection[$randomKey];
         }
         return null;
-        
+    }
+
+    /**
+     * Remove an entity from the collection.
+     *
+     * @param DomainEntityInterface $item The item to remove from the collection
+     *
+     * @return bool true if the item was succesfully removed, or false if the item was not present in the collection
+     */
+    public function remove(DomainEntityInterface $item) : bool
+    {
+        $hasRemoved = false;
+        foreach ($this->collection as $delta => $candidateItem) {
+            if ($item->getID() == $candidateItem->getID()) {
+                $hasRemoved = true;
+                unset($this->collection[$delta]);
+            }
+        }
+        return $hasRemoved;
+    }
+
+    /**
+     * Remove an entity from the collection by id.
+     *
+     * @param int $id The ID of the item to remove from the collection
+     *
+     * @return bool true if the item was succesfully removed, or false if the item was not present in the collection
+     */
+    public function removeByID(int $itemID): bool
+    {
+        $hasRemoved = false;
+        foreach ($this->collection as $delta => $candidateItem) {
+            if ($itemID == $candidateItem->getID()) {
+                $hasRemoved = true;
+                unset($this->collection[$delta]);
+            }
+        }
+        return $hasRemoved;
     }
 }
