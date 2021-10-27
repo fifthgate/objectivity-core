@@ -194,4 +194,14 @@ interface DomainEntityCollectionInterface extends Iterator
      * @return bool true if the item was succesfully removed, or false if the item was not present in the collection
      */
     public function removeByID(int $itemID) : bool;
+
+    /**
+     * Replace an entity by its delta.
+     *
+     * @param  int                   $delta             The delta to replace.
+     * @param  DomainEntityInterface $replacementEntity The replacement entity
+     *
+     * @return bool                                      True if succesful, false if not.
+     */
+    public function replaceByDelta(int $delta, DomainEntityInterface $replacementEntity) : bool;
 }

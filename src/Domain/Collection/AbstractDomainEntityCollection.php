@@ -346,4 +346,24 @@ abstract class AbstractDomainEntityCollection extends AbstractIterator implement
         }
         return $hasRemoved;
     }
+
+    /**
+     * Replace an entity by its delta.
+     *
+     * @param  int                   $delta             The delta to replace.
+     * @param  DomainEntityInterface $replacementEntity The replacement entity
+     *
+     * @return bool                                      True if succesful, false if not.
+     */
+    public function replaceByDelta(int $delta, DomainEntityInterface $replacementEntity) : bool
+    {
+        $hasReplaced = false;
+        foreach ($this->collection as $itemDelta => $candidateItem) {
+            if ($itemDelta == $delta) {
+                $this->collection[$delta] = $replacementEntity;
+                $hasReplaced = true;
+            }
+        }
+        return $hasReplaced;
+    }
 }
