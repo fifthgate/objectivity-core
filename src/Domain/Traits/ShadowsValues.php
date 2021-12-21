@@ -7,7 +7,7 @@ use Fifthgate\Objectivity\Core\Domain\Exceptions\ShadowValueException;
 
 trait ShadowsValues
 {
-    protected $shadowValues = [];
+    protected array $shadowValues = [];
 
     final public function setShadowValue(string $shadowName, $value)
     {

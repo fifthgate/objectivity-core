@@ -11,7 +11,7 @@ use Fifthgate\Objectivity\Core\Domain\AbstractDomainEntity;
 use Fifthgate\Objectivity\Core\Domain\Traits\JsonSerializes;
 use JsonSerializable;
 
-abstract class AbstractSerializableDomainEntity extends AbstractDomainEntity implements DomainEntityInterface, TimestampingDomainEntityInterface, JsonSerializable
+abstract class AbstractSerializableDomainEntity extends AbstractSoftDeletingDomainEntity implements DomainEntityInterface, TimestampingDomainEntityInterface, JsonSerializable
 
 {
     use JsonSerializes;

@@ -42,7 +42,8 @@ trait JsonSerializes
             "getCreatedAt",
             "getUpdatedAt",
             "getUpdatedAt",
-            "getShadowValue"
+            "getShadowValue",
+            "getDeletedAt"
         ];
         foreach ($defaultExcludedMethods as $defaultExcludedMethod) {
             if (!in_array($defaultExcludedMethod, $excludedMethods)) {

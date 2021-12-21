@@ -55,12 +55,14 @@ class EntityTest extends ObjectivityCoreTestCase
         $domainEntity->setCreatedAt($updatedAt);
         $domainEntity->setDummyStringValue("dummyString");
         $domainEntity->setDummySlugValue("dummy_slug");
+        $domainEntity->setDeletedAt($updatedAt);
         $expected = [
             'id' => 987,
             'updated_at' => '2009-10-14 09:09:09',
             'created_at' => '2009-10-14 09:09:09',
             'dummy_string_value' => 'dummyString',
-            'dummy_slug_value' => 'dummy_slug'
+            'dummy_slug_value' => 'dummy_slug',
+            'deleted_at' => '2009-10-14 09:09:09'
         ];
         $this->assertEquals($expected, $domainEntity->jsonSerialize());
     }
@@ -101,35 +103,5 @@ class EntityTest extends ObjectivityCoreTestCase
 
         $clonedEntity = clone $domainEntity;
         $this->assertNull($clonedEntity->getID());
-    }
-
-    public function testShadowValues()
-    {
-        $domainEntity = new MockShadowableDomainEntity;
-        $domainEntity->setID(987);
-        $createdAt = new DateTime('2009-10-13 09:09:09');
-        $domainEntity->setCreatedAt($createdAt);
-        $updatedAt = new DateTime('2009-10-14 09:09:09');
-        $domainEntity->setUpdatedAt($updatedAt);
-        $domainEntity->hashSelf();
-        $newUpdatedAt = new DateTime('2009-10-15 09:09:09');
-        $domainEntity->setUpdatedAt($newUpdatedAt);
-        $deletedAt = new DateTime('2009-10-16 09:09:09');
-        $domainEntity->setDeletedAt($deletedAt);
-        $domainEntity->setDummyStringValue('dummy');
-        $domainEntity->setDummySlugValue("dummy_slug");
-        $domainEntity->setShadowValue('parent_id', 1);
-        $this->assertEquals(1, $domainEntity->getShadowValue('parent_id'));
-        $this->expectException(ShadowValueException::class);
-        $domainEntity->setShadowValue('fakevalue', 2);
-        $this->expectException(ShadowValueException::class);
-        $domainEntity->getShadowValue('fakeValue');
-        $this->assertTrue($domainEntity->isShadowableValue('parent_id'));
-        $this->assertFalse($domainEntity->isShadowableValue('fakevalue'));
-
-        $domainEntity->clearShadowValue('parent_id');
-        $this->assertNull($domainEntity->getShadowValue('parent_id'));
-        $this->expectException(ShadowValueException::class);
-        $domainEntity->clearShadowValue('fakeValue');
     }
 }
