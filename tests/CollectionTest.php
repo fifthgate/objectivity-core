@@ -437,6 +437,8 @@ class CollectionTest extends ObjectivityCoreTestCase
         $collection->add($entityThree);
 
         $this->assertEquals($collection->getItemByID(2), $entityTwo);
+
+        $this->assertNull($collection->getItemByID(999));
     }
 
     public function testFirstNEdgeCase()
@@ -529,6 +531,8 @@ class CollectionTest extends ObjectivityCoreTestCase
     public function testRandom()
     {
         $collection = new MockDomainEntityCollection;
+
+        $this->assertNull($collection->random());
         $entityOne = new MockSerializableDomainEntity;
         $entityTwo = new MockSerializableDomainEntity;
         $entityThree = new MockSerializableDomainEntity;
