@@ -206,7 +206,7 @@ abstract class AbstractDomainEntityCollection extends AbstractIterator implement
      *
      * @return bool True if succesful, false if not.
      */
-    public function call(int $entityID, string $methodName, ? array $arguments) : bool
+    public function call(int $entityID, string $methodName, array $arguments = []) : bool
     {
         foreach ($this->collection as &$item) {
             if ($item->getID() == $entityID) {
@@ -234,7 +234,7 @@ abstract class AbstractDomainEntityCollection extends AbstractIterator implement
         if (!empty($this->collection)) {
             foreach ($this->collection as &$item) {
                 if (method_exists($item, $methodName)) {
-                    call_user_func_array([$item, $methodName], !empty($arguments) ? $arguments : null);
+                    call_user_func_array([$item, $methodName], $arguments);
                     $hasCalled = true;
                 }
             }

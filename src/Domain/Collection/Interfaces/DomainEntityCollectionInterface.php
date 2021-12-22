@@ -133,7 +133,7 @@ interface DomainEntityCollectionInterface extends Iterator
      *
      * @return bool True if succesful, false if not.
      */
-    public function call(int $entityID, string $methodName, ? array $arguments) : bool;
+    public function call(int $entityID, string $methodName, array $arguments = []) : bool;
 
     /**
      * Call a method on ALL collection members, if possible.
