@@ -1,32 +1,33 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Fifthgate\Objectivity\Core\Domain\Collection;
 
 use Fifthgate\Objectivity\Core\Domain\Collection\Interfaces\DomainEntityCollectionInterface;
 use Fifthgate\Objectivity\Core\Domain\Collection\Exceptions\InvalidMassCallException;
 use Fifthgate\Objectivity\Core\Domain\Interfaces\DomainEntityInterface;
-use Fifthgate\Objectivity\Core\Domain\Collection\AbstractIterator;
 
 abstract class AbstractDomainEntityCollection extends AbstractIterator implements DomainEntityCollectionInterface
 {
-    protected $collection = [];
+    protected array $collection = [];
 
     protected $position;
 
     /**
-     * Add an item to the end of the colleciton
+     * Add an item to the end of the collection
      *
      * @param DomainEntityInterface $domainEntity The item to be added
      *
      * @return void
      */
-    public function add(DomainEntityInterface $domainEntity)
+    public function add(DomainEntityInterface $domainEntity): void
     {
         $this->collection[] = $domainEntity;
     }
 
     /**
-     * Sort the collection using usort and a callable (Usuaully a closure)
+     * Sort the collection using usort and a callable (Usually a closure)
      *
      * @param callable $sortRoutine A callable routine obeying usort return rules.
      *
@@ -73,9 +74,9 @@ abstract class AbstractDomainEntityCollection extends AbstractIterator implement
      *
      * @param int $length How many items do you want?
      *
-     * @return array The first n items in the collection.
+     * @return DomainEntityCollectionInterface The first n items in the collection.
      */
-    public function getFirstN(int $length)
+    public function getFirstN(int $length): DomainEntityCollectionInterface
     {
         $collection = new $this;
         $items = $this->slice($length);
@@ -111,7 +112,7 @@ abstract class AbstractDomainEntityCollection extends AbstractIterator implement
      *
      * @return DomainEntityInterface|Null The First item in the collection, or null if collection is empty.
      */
-    public function first() : ? DomainEntityInterface
+    public function first() : ?DomainEntityInterface
     {
         $unsortedCollection = $this->collection;
         $unsortedCollection = array_reverse($unsortedCollection);
@@ -125,9 +126,9 @@ abstract class AbstractDomainEntityCollection extends AbstractIterator implement
     /**
      * Get the last item in the collection, as currently sorted.
      *
-     * @return DomainEntityInterface The last item in the collection
+     * @return DomainEntityInterface|null The last item in the collection
      */
-    public function last() : ? DomainEntityInterface
+    public function last() : ?DomainEntityInterface
     {
         $unsortedCollection = $this->collection;
         $item = array_pop($unsortedCollection);
@@ -188,7 +189,7 @@ abstract class AbstractDomainEntityCollection extends AbstractIterator implement
      *
      * @return void
      */
-    public function replace(int $entityID, DomainEntityInterface $domainEntity)
+    public function replace(int $entityID, DomainEntityInterface $domainEntity): void
     {
         foreach ($this->collection as $delta => $item) {
             if ($item->getID() == $entityID && $item->getID() !== 0) {
@@ -200,11 +201,11 @@ abstract class AbstractDomainEntityCollection extends AbstractIterator implement
     /**
      * Call a method on a collection member.
      *
-     * @param int        $entityID   The entity id
-     * @param string     $methodName The method name
-     * @param array|null $arguments  An array of argument
+     * @param int $entityID The entity id
+     * @param string $methodName The method name
+     * @param array $arguments An array of argument
      *
-     * @return bool True if succesful, false if not.
+     * @return bool True if successful, false if not.
      */
     public function call(int $entityID, string $methodName, array $arguments = []) : bool
     {
@@ -222,11 +223,12 @@ abstract class AbstractDomainEntityCollection extends AbstractIterator implement
     /**
      * Call a method on ALL collection members, if possible.
      *
-     * @param string     $methodName     The method name
-     * @param array      $arguments      The arguments
-     * @param bool       $throwException Whether or not to throw an exception if the call cannot be executed on ANY member,
+     * @param string $methodName The method name
+     * @param array $arguments The arguments
+     * @param bool $throwException Whether or not to throw an exception if the call cannot be executed on ANY member,
      *
      * @return bool      True if at least one call was called, false if not.
+     * @throws InvalidMassCallException
      */
     public function massCall(string $methodName, array $arguments = [], bool $throwException = false) : bool
     {
@@ -314,7 +316,7 @@ abstract class AbstractDomainEntityCollection extends AbstractIterator implement
      *
      * @param DomainEntityInterface $item The item to remove from the collection
      *
-     * @return bool true if the item was succesfully removed, or false if the item was not present in the collection
+     * @return bool true if the item was successfully removed, or false if the item was not present in the collection
      */
     public function remove(DomainEntityInterface $item) : bool
     {
@@ -331,11 +333,10 @@ abstract class AbstractDomainEntityCollection extends AbstractIterator implement
     /**
      * Remove an entity from the collection by id.
      *
-     * @param int $id The ID of the item to remove from the collection
-     *
-     * @return bool true if the item was succesfully removed, or false if the item was not present in the collection
+     * @param mixed $itemID
+     * @return bool true if the item was successfully removed, or false if the item was not present in the collection
      */
-    public function removeByID(int $itemID): bool
+    public function removeByID(mixed $itemID): bool
     {
         $hasRemoved = false;
         foreach ($this->collection as $delta => $candidateItem) {
@@ -353,7 +354,7 @@ abstract class AbstractDomainEntityCollection extends AbstractIterator implement
      * @param  int                   $delta             The delta to replace.
      * @param  DomainEntityInterface $replacementEntity The replacement entity
      *
-     * @return bool                                      True if succesful, false if not.
+     * @return bool                                      True if successful, false if not.
      */
     public function replaceByDelta(int $delta, DomainEntityInterface $replacementEntity) : bool
     {

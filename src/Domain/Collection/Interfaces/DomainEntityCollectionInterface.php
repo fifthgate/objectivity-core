@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Fifthgate\Objectivity\Core\Domain\Collection\Interfaces;
 
 use Fifthgate\Objectivity\Core\Domain\Interfaces\DomainEntityInterface;
@@ -12,7 +14,7 @@ interface DomainEntityCollectionInterface extends Iterator
      *
      * @param DomainEntityInterface $domainEntity The Entity to Add
      */
-    public function add(DomainEntityInterface $domainEntity);
+    public function add(DomainEntityInterface $domainEntity): void;
 
     /**
      * Delete an Item by its key
@@ -20,7 +22,7 @@ interface DomainEntityCollectionInterface extends Iterator
      * @param  mixed $key The Key of the item.
      * @return void;
      */
-    public function delete($key) : bool;
+    public function delete(mixed $key) : bool;
 
     /**
      * Is this collection empty?
@@ -34,7 +36,7 @@ interface DomainEntityCollectionInterface extends Iterator
      *
      * @return void
      */
-    public function flush();
+    public function flush(): void;
 
     /**
     * Sort the collection using usort and a callable (Usuaully a closure)
@@ -83,7 +85,7 @@ interface DomainEntityCollectionInterface extends Iterator
     /**
      * Get the last item in the collection, as currently sorted.
      *
-     * @return DomainEntityInterface The last item in the collection
+     * @return DomainEntityInterface|null The last item in the collection
      */
     public function last() : ? DomainEntityInterface;
 
@@ -122,16 +124,16 @@ interface DomainEntityCollectionInterface extends Iterator
      *
      * @return void
      */
-    public function replace(int $entityID, DomainEntityInterface $domainEntity);
+    public function replace(int $entityID, DomainEntityInterface $domainEntity): void;
 
     /**
      * Call a method on a collection member.
      *
-     * @param int        $entityID   The entity id
-     * @param string     $methodName The method name
-     * @param array|null $arguments  An array of argument
+     * @param int $entityID The entity id
+     * @param string $methodName The method name
+     * @param array $arguments An array of argument
      *
-     * @return bool True if succesful, false if not.
+     * @return bool True if successful, false if not.
      */
     public function call(int $entityID, string $methodName, array $arguments = []) : bool;
 
@@ -182,18 +184,17 @@ interface DomainEntityCollectionInterface extends Iterator
      *
      * @param DomainEntityInterface $item The item to remove from the collection
      *
-     * @return bool true if the item was succesfully removed, or false if the item was not present in the collection
+     * @return bool true if the item was successfully removed, or false if the item was not present in the collection
      */
     public function remove(DomainEntityInterface $item) : bool;
 
     /**
      * Remove an entity from the collection by id.
      *
-     * @param int $id The ID of the item to remove from the collection
-     *
-     * @return bool true if the item was succesfully removed, or false if the item was not present in the collection
+     * @param mixed $itemID
+     * @return bool true if the item was successfully removed, or false if the item was not present in the collection
      */
-    public function removeByID(int $itemID) : bool;
+    public function removeByID(mixed $itemID) : bool;
 
     /**
      * Replace an entity by its delta.

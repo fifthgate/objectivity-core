@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * A trait to enable filling of an object from an array.
  *
@@ -12,14 +14,17 @@
  */
 namespace Fifthgate\Objectivity\Core\Domain\Traits;
 
-use Fifthgate\Objectivity\Core\Domain\Traits\Exceptions\FillableInvalidValueException;
+use DateTime;
 use Fifthgate\Objectivity\Core\Domain\Interfaces\FillableInterface;
-use ReflectionProperty;
+use Fifthgate\Objectivity\Core\Domain\Traits\Exceptions\FillableInvalidValueException;
+use Fifthgate\Objectivity\Core\Domain\Traits\Exceptions\ShadowValueException;
 use ReflectionMethod;
-use \DateTime;
 
 trait Fillable {
 
+    /**
+     * @throws FillableInvalidValueException|ShadowValueException
+     */
     public static function fill(array $values) : FillableInterface
     {
         $filledItem = new self;
@@ -63,9 +68,22 @@ trait Fillable {
         return $filledItem;
     }
 
+    /**
+     * @param FillableInterface $filledItem
+     * @param string $propertyName
+     * @param string $setterName
+     * @return string|null
+     * @throws FillableInvalidValueException
+     * @throws ShadowValueException
+     */
     protected static function determineParameterType(FillableInterface $filledItem, string $propertyName, string $setterName) : ? string
     {
-        $r = new ReflectionMethod($filledItem, $setterName);
+        try {
+            $r = new ReflectionMethod($filledItem, $setterName);
+        } catch (\ReflectionException $e) {
+            throw new ShadowValueException($e->getMessage(), $e->getCode(), $e);
+        }
+
         $parameters = $r->getParameters();
         $firstParameter = reset($parameters);
         if (!$r->isPublic()) {
@@ -80,7 +98,11 @@ trait Fillable {
         return $firstParameter->getType()->getName();
     }
 
-    protected static function validateFill(FillableInterface $filledItem, string $candidateSetterName, $propertyName, $value)
+    /**
+     * @throws ShadowValueException
+     * @throws FillableInvalidValueException
+     */
+    protected static function validateFill(FillableInterface $filledItem, string $candidateSetterName, $propertyName, $value): void
     {
         if (method_exists($filledItem, $candidateSetterName)) {
             //2
@@ -113,7 +135,7 @@ trait Fillable {
                     break;
                 case 'DateTimeInterface':
                     if (
-                        (is_object($value) && !($value instanceof DateTimeInterface))
+                        (is_object($value) && !($value instanceof \DateTimeInterface))
                         or
                         (is_string($value) && !strtotime($value))
                     ) {

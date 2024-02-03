@@ -1,15 +1,24 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Fifthgate\Objectivity\Core\Domain\Traits;
 
-use Fifthgate\Objectivity\Core\Domain\Interfaces\ShadowsValuesInterface;
-use Fifthgate\Objectivity\Core\Domain\Exceptions\ShadowValueException;
+use Fifthgate\Objectivity\Core\Domain\Traits\Exceptions\ShadowValueException;
 
 trait ShadowsValues
 {
     protected array $shadowValues = [];
 
-    final public function setShadowValue(string $shadowName, $value)
+    /**
+     * @param string $shadowName
+     * @param $value
+     *
+     * @return void
+     *
+     * @throws ShadowValueException
+     */
+    final public function setShadowValue(string $shadowName, $value): void
     {
         if ($this->isShadowableValue($shadowName)) {
             $this->shadowValues[$shadowName] = $value;
@@ -18,7 +27,14 @@ trait ShadowsValues
         }
     }
 
-    final public function getShadowValue(string $shadowName)
+    /**
+     * @param string $shadowName
+     *
+     * @return mixed|null
+     *
+     * @throws ShadowValueException
+     */
+    final public function getShadowValue(string $shadowName): mixed
     {
         if ($this->isShadowableValue($shadowName)) {
             return $this->shadowValues[$shadowName] ?? null;
@@ -28,6 +44,7 @@ trait ShadowsValues
 
     /**
      * Clears a shadow value once it's of no further use.
+     * @throws ShadowValueException
      */
     final public function clearShadowValue(string $shadowName) : void
     {

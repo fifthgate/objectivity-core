@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * A simple trait to fluff json serialization in the absence of something better.
  *
@@ -13,8 +16,6 @@ namespace Fifthgate\Objectivity\Core\Domain\Traits;
 
 use ReflectionMethod;
 use \DateTimeInterface;
-use Fifthgate\Objectivity\Core\Domain\Interfaces\JsonSerializableDomainEntityInterface;
-use Fifthgate\Objectivity\Core\Domain\Collection\Interfaces\JsonSerializableDomainEntityCollectionInterface;
 use JsonSerializable;
 
 /**
@@ -33,10 +34,11 @@ trait JsonSerializes
      * Serialize the object to an array.
      *
      * @return array An array of object variables, based on get methods.
+     *
+     * @throws \ReflectionException
      */
-    public function jsonSerialize($excludedMethods = [])
+    public function jsonSerialize($excludedMethods = []): array
     {
-
         $defaultExcludedMethods = [
             "getID",
             "getCreatedAt",

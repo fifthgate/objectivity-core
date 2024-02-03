@@ -18,7 +18,7 @@ class MockSerializableDomainEntity extends AbstractSerializableDomainEntity impl
 
     protected string $dummySlugValue;
 
-    public function setDummySlugValue(string $dummySlugValue)
+    public function setDummySlugValue(string $dummySlugValue): void
     {
         $this->dummySlugValue = $dummySlugValue;
     }
@@ -27,7 +27,7 @@ class MockSerializableDomainEntity extends AbstractSerializableDomainEntity impl
     {
         return $this->dummySlugValue;
     }
-    public function setDummyStringValue(string $dummyStringValue)
+    public function setDummyStringValue(string $dummyStringValue): void
     {
         $this->dummyStringValue = $dummyStringValue;
     }

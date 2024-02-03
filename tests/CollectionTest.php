@@ -11,7 +11,7 @@ use Fifthgate\Objectivity\Core\Domain\Collection\Exceptions\InvalidMassCallExcep
 class CollectionTest extends ObjectivityCoreTestCase
 {
     
-    public function testObjectIntegrity()
+    public function testObjectIntegrity(): void
     {
         $collection = new MockDomainEntityCollection;
         $this->assertNull($collection->first());
@@ -93,7 +93,7 @@ class CollectionTest extends ObjectivityCoreTestCase
         $this->assertEquals(0, $collection->count());
     }
 
-    public function testHasKey()
+    public function testHasKey(): void
     {
         $collection = new MockDomainEntityCollection;
         $this->assertNull($collection->first());
@@ -127,19 +127,19 @@ class CollectionTest extends ObjectivityCoreTestCase
         $this->assertFalse($collection->hasItemWithFieldValue('completelymadeupmethod', 'dummy6'));
     }
 
-    public function testEmptyHasKey()
+    public function testEmptyHasKey(): void
     {
         $collection = new MockDomainEntityCollection;
         $this->assertFalse($collection->hasItemWithFieldValue('getDummyStringValue', 'dummy5'));
     }
 
-    public function testEmptyCall()
+    public function testEmptyCall(): void
     {
         $collection = new MockDomainEntityCollection;
         $this->assertFalse($collection->call(2, "setDummyStringValue", ["stringX"]));
     }
 
-    public function testFilterByFieldValue()
+    public function testFilterByFieldValue(): void
     {
         $collection = new MockDomainEntityCollection;
 
@@ -169,7 +169,7 @@ class CollectionTest extends ObjectivityCoreTestCase
         $this->assertNull($collection->filterByFieldValue('completelymadeupmethod', 'string1'));
     }
 
-    public function testReplace()
+    public function testReplace(): void
     {
         $collection = new MockDomainEntityCollection;
         $entityOne = new MockDomainEntity;
@@ -209,7 +209,7 @@ class CollectionTest extends ObjectivityCoreTestCase
         $this->assertEquals($entityTwoUpdatedAt, $revisedEntity2->getUpdatedAt());
     }
 
-    public function testCall()
+    public function testCall(): void
     {
         $collection = new MockDomainEntityCollection;
         $entityOne = new MockDomainEntity;
@@ -245,7 +245,7 @@ class CollectionTest extends ObjectivityCoreTestCase
         $this->assertEquals("stringX", $revisedEntity2->getDummyStringValue());
     }
 
-    public function testMassCall()
+    public function testMassCall(): void
     {
         $collection = new MockDomainEntityCollection;
         $entityOne = new MockDomainEntity;
@@ -289,7 +289,7 @@ class CollectionTest extends ObjectivityCoreTestCase
         $this->assertEquals('string3', $revisedEntity3->getDummyStringValue());
     }
 
-    public function testInvalidMassCall()
+    public function testInvalidMassCall(): void
     {
         $collection = new MockDomainEntityCollection;
         $entityOne = new MockDomainEntity;
@@ -326,19 +326,19 @@ class CollectionTest extends ObjectivityCoreTestCase
     }
 
     //Hotfix reversion check.
-    public function testEmptyMassCall()
+    public function testEmptyMassCall(): void
     {
         $collection = new MockDomainEntityCollection;
         $this->assertFalse($collection->massCall("setNonnsensicalRunner", ["slugX"], true));
     }
 
-    public function testEmptyFirstAndLast()
+    public function testEmptyFirstAndLast(): void
     {
         $collection = new MockDomainEntityCollection;
         $this->assertNull($collection->first());
         $this->assertNull($collection->last());
     }
-    public function testSerialize()
+    public function testSerialize(): void
     {
         $collection = new MockDomainEntityCollection;
         $entityOne = new MockSerializableDomainEntity;
@@ -400,7 +400,7 @@ class CollectionTest extends ObjectivityCoreTestCase
         $this->assertEquals($expected, $collection->jsonSerialize());
     }
 
-    public function testGetItemByID()
+    public function testGetItemByID(): void
     {
         $collection = new MockDomainEntityCollection;
         $entityOne = new MockSerializableDomainEntity;
@@ -441,13 +441,13 @@ class CollectionTest extends ObjectivityCoreTestCase
         $this->assertNull($collection->getItemByID(999));
     }
 
-    public function testFirstNEdgeCase()
+    public function testFirstNEdgeCase(): void
     {
         $collection = new MockDomainEntityCollection;
         $this->assertTrue($collection->getFirstN(1)->isEmpty());
     }
 
-    public function testGetNth()
+    public function testGetNth(): void
     {
         $collection = new MockDomainEntityCollection;
         $entityOne = new MockSerializableDomainEntity;
@@ -489,7 +489,7 @@ class CollectionTest extends ObjectivityCoreTestCase
         $this->assertNull($collection->getNth(5));
     }
 
-    public function testGetIDs()
+    public function testGetIDs(): void
     {
         $collection = new MockDomainEntityCollection;
         $entityOne = new MockSerializableDomainEntity;
@@ -528,7 +528,7 @@ class CollectionTest extends ObjectivityCoreTestCase
         $this->assertEquals([1,2,3], $collection->getIDs());
     }
 
-    public function testRandom()
+    public function testRandom(): void
     {
         $collection = new MockDomainEntityCollection;
 
@@ -581,7 +581,7 @@ class CollectionTest extends ObjectivityCoreTestCase
         $this->assertTrue($sufficientlyRandom);
     }
 
-    public function testRemove()
+    public function testRemove(): void
     {
         $collection = new MockDomainEntityCollection;
         $entityOne = new MockSerializableDomainEntity;
@@ -634,7 +634,7 @@ class CollectionTest extends ObjectivityCoreTestCase
         $this->assertFalse($collection->remove($entityThree));
     }
 
-    public function testReplaceByDelta()
+    public function testReplaceByDelta(): void
     {
         $collection = new MockDomainEntityCollection;
         $entityOne = new MockSerializableDomainEntity;
@@ -677,7 +677,7 @@ class CollectionTest extends ObjectivityCoreTestCase
         $this->assertEquals($updatedEntityOne, $collection->first());
     }
 
-    public function testConstruct()
+    public function testConstruct(): void
     {
         $entityOne = new MockSerializableDomainEntity;
         $entityTwo = new MockSerializableDomainEntity;

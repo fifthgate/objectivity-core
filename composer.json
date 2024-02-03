@@ -11,8 +11,8 @@
         }
     ],
     "require": {
-        "guzzlehttp/guzzle": "^7.2"
-
+        "guzzlehttp/guzzle": "^7.2",
+        "ext-json": "*"
     },
     "require-dev": {
         "orchestra/testbench": "^8.21",
@@ -29,5 +29,11 @@
             "Fifthgate\\Objectivity\\Core\\Tests\\": "tests",
             "Fifthgate\\Objectivity\\Core\\Tests\\Mocks\\": "tests/mocks"
         }
+    },
+    "config": {
+        "platform": {
+            "php": "8.3"
+        }
     }
+
 }

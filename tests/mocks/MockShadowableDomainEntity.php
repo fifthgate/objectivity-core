@@ -16,7 +16,7 @@ class MockShadowableDomainEntity extends AbstractSoftDeletingDomainEntity implem
 
     protected string $dummySlugValue;
 
-    public function setDummySlugValue(string $dummySlugValue)
+    public function setDummySlugValue(string $dummySlugValue): void
     {
         $this->dummySlugValue = $dummySlugValue;
     }
@@ -25,7 +25,7 @@ class MockShadowableDomainEntity extends AbstractSoftDeletingDomainEntity implem
     {
         return $this->dummySlugValue;
     }
-    public function setDummyStringValue(string $dummyStringValue)
+    public function setDummyStringValue(string $dummyStringValue): void
     {
         $this->dummyStringValue = $dummyStringValue;
     }

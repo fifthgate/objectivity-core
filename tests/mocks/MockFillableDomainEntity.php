@@ -31,7 +31,7 @@ class MockFillableDomainEntity extends AbstractSoftDeletingDomainEntity implemen
 
 	private DateTimeInterface $privateDate;
 
-	public function setDummySlugValue(string $dummySlugValue) {
+	public function setDummySlugValue(string $dummySlugValue): void {
 		$this->dummySlugValue = $dummySlugValue;
 	}
 
@@ -46,7 +46,7 @@ class MockFillableDomainEntity extends AbstractSoftDeletingDomainEntity implemen
 		return $this->dummyStringValue;
 	}
 
-	public function setDummyDate(DateTimeInterface $dummyDate)
+	public function setDummyDate(DateTimeInterface $dummyDate): void
 	{
 		$this->dummyDate = $dummyDate;
 	}
@@ -66,7 +66,7 @@ class MockFillableDomainEntity extends AbstractSoftDeletingDomainEntity implemen
 		return $this->dummyValueObject;
 	}
 
-	public function setDummyInt(int $dummyInt)
+	public function setDummyInt(int $dummyInt): void
 	{
 		$this->dummyInt = $dummyInt;
 	}
@@ -76,7 +76,7 @@ class MockFillableDomainEntity extends AbstractSoftDeletingDomainEntity implemen
 		return $this->dummyInt;
 	}
 
-	public function setDummyFloat(float $dummyFloat)
+	public function setDummyFloat(float $dummyFloat): void
 	{
 		$this->dummyFloat = $dummyFloat;
 	}
@@ -86,7 +86,7 @@ class MockFillableDomainEntity extends AbstractSoftDeletingDomainEntity implemen
 		return $this->dummyFloat;
 	}
 
-	public function setDummyBool(bool $dummyBool)
+	public function setDummyBool(bool $dummyBool): void
 	{
 		$this->dummyBool = $dummyBool;
 	}
@@ -96,7 +96,7 @@ class MockFillableDomainEntity extends AbstractSoftDeletingDomainEntity implemen
 		return $this->dummyBool;
 	}
 
-	public function setDummyArray(array $dummyArray)
+	public function setDummyArray(array $dummyArray): void
 	{
 		$this->dummyArray = $dummyArray;
 	}
@@ -111,7 +111,7 @@ class MockFillableDomainEntity extends AbstractSoftDeletingDomainEntity implemen
 		$this->privateDate = $privateDate;
 	}
 
-	public function setTooManyParameters(string $parameter1, string $parameter2)
+	public function setTooManyParameters(string $parameter1, string $parameter2): void
 	{
 		die("I should never get here.");
 	}

@@ -1,14 +1,14 @@
 <?php
 
-namespace Fifthgate\Objectivity\Core\Domain\Interfaces;
+declare(strict_types=1);
 
-use \DateTimeInterface;
+namespace Fifthgate\Objectivity\Core\Domain\Interfaces;
 
 interface DomainEntityInterface
 {
-    public function clearID();
+    public function clearID(): void;
 
-    public function getID();
+    public function getID(): ?int;
 
     public function isDirty() : bool;
 

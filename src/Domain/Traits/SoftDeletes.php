@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * A simple trait to fluff json serialization in the absence of something better.
  *
@@ -11,14 +14,10 @@
  */
 namespace Fifthgate\Objectivity\Core\Domain\Traits;
 
-use ReflectionMethod;
 use \DateTimeInterface;
-use Fifthgate\Objectivity\Core\Domain\Interfaces\JsonSerializableDomainEntityInterface;
-use Fifthgate\Objectivity\Core\Domain\Collection\Interfaces\JsonSerializableDomainEntityCollectionInterface;
-use JsonSerializable;
 
 /**
- * Soft Deletiong trait for objectivity-compatible Domain Entities.
+ * Soft Deletion trait for objectivity-compatible Domain Entities.
  *
  * @category ValueObject
  * @package  Objectivity Core
@@ -29,9 +28,9 @@ use JsonSerializable;
  */
 trait SoftDeletes
 {
-     protected $deletedAt;
+     protected ?\DateTimeInterface $deletedAt;
 
-    final public function setDeletedAt(DateTimeInterface $deletedAt)
+    final public function setDeletedAt(DateTimeInterface $deletedAt): void
     {
         $this->deletedAt = $deletedAt;
     }

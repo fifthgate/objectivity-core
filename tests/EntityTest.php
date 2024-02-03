@@ -4,8 +4,7 @@ namespace Fifthgate\Objectivity\Core\Tests;
 
 use Fifthgate\Objectivity\Core\Tests\Mocks\MockDomainEntity;
 use Fifthgate\Objectivity\Core\Tests\Mocks\MockSerializableDomainEntity;
-use Fifthgate\Objectivity\Core\Tests\Mocks\MockShadowableDomainEntity;
-use Fifthgate\Objectivity\Core\Domain\Exceptions\ShadowValueException;
+
 use \DateTime;
 
 class EntityTest extends ObjectivityCoreTestCase

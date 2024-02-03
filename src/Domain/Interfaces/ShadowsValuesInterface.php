@@ -11,7 +11,7 @@ interface ShadowsValuesInterface
     /**
      * Sets a shadow value.
      **/
-    public function setShadowValue(string $shadowName, $value);
+    public function setShadowValue(string $shadowName, $value): void;
 
     /**
      *  Gets a shadow value

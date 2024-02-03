@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Fifthgate\Objectivity\Core\Domain;
 
 use Fifthgate\Objectivity\Core\Domain\Interfaces\DomainEntityInterface;
@@ -21,7 +23,7 @@ abstract class AbstractDomainEntity implements DomainEntityInterface, Timestampi
         return ((!$this->hash) or ($this->hash != $this->hashSelf()));
     }
 
-    public function clearID()
+    public function clearID(): void
     {
         $this->id = null;
     }
@@ -35,22 +37,22 @@ abstract class AbstractDomainEntity implements DomainEntityInterface, Timestampi
         return $hash;
     }
 
-    public function setID($id)
+    public function setID($id): void
     {
         $this->id = $id;
     }
 
-    public function getID()
+    public function getID(): ? int
     {
         return $this->id;
     }
 
-    public function setCreatedAt(DateTimeInterface $createdAt)
+    public function setCreatedAt(DateTimeInterface $createdAt): void
     {
         $this->createdAt = $createdAt;
     }
 
-    public function setUpdatedAt(DateTimeInterface $updatedAt)
+    public function setUpdatedAt(DateTimeInterface $updatedAt): void
     {
         $this->updatedAt = $updatedAt;
     }

@@ -1,9 +1,8 @@
 <?php
 
-namespace Fifthgate\Objectivity\Core\Domain\Interfaces;
+declare(strict_types=1);
 
-use Fifthgate\Objectivity\Core\Domain\Interfaces\DomainEntityInterface;
-use \DateTimeInterface;
+namespace Fifthgate\Objectivity\Core\Domain\Interfaces;
 
 interface SluggableDomainEntityInterface extends DomainEntityInterface
 {

@@ -1,15 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Fifthgate\Objectivity\Core\Domain\Collection;
 
+use Fifthgate\Objectivity\Core\Domain\Interfaces\DomainEntityInterface;
 use \Iterator;
+use ReturnTypeWillChange;
 
 /**
  * An abstract iterator, useless on its own but useful for avoiding duplication of effort.
  */
 abstract class AbstractIterator implements Iterator
 {
-    protected $collection = [];
+    protected array $collection = [];
 
     protected $position;
 
@@ -35,7 +39,7 @@ abstract class AbstractIterator implements Iterator
      *
      * @return void
      */
-    public function rewind()
+    public function rewind(): void
     {
         $this->position = 0;
     }
@@ -45,7 +49,7 @@ abstract class AbstractIterator implements Iterator
      *
      * @return DomainEntityInterface
      */
-    public function current()
+    public function current(): DomainEntityInterface
     {
         return $this->collection[$this->position];
     }
@@ -55,7 +59,7 @@ abstract class AbstractIterator implements Iterator
      *
      * @return mixed position
      */
-    public function key()
+    #[ReturnTypeWillChange] public function key()
     {
         return $this->position;
     }
@@ -65,7 +69,7 @@ abstract class AbstractIterator implements Iterator
      *
      * @return void
      */
-    public function next()
+    public function next(): void
     {
         $this->position++;
     }
@@ -75,7 +79,7 @@ abstract class AbstractIterator implements Iterator
      *
      * @return bool
      */
-    public function valid()
+    public function valid(): bool
     {
         return isset($this->collection[$this->position]);
     }
@@ -83,11 +87,11 @@ abstract class AbstractIterator implements Iterator
     /**
      * Delete an item from the collection
      *
-     * @param int $key The delta of the item to be deleted.
+     * @param mixed $key The delta of the item to be deleted.
      *
-     * @return bool True if sucessfully deleted, false otherwise.
+     * @return bool True if successfully deleted, false otherwise.
      */
-    public function delete($key) : bool
+    public function delete(mixed $key) : bool
     {
         if (isset($this->collection[$key])) {
             unset($this->collection[$key]);
@@ -111,7 +115,7 @@ abstract class AbstractIterator implements Iterator
      *
      * @return void
      */
-    public function flush()
+    public function flush(): void
     {
         $this->collection = [];
     }

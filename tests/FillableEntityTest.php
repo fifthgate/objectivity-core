@@ -1,20 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Fifthgate\Objectivity\Core\Tests;
 
-use Fifthgate\Objectivity\Core\Tests\Mocks\MockDomainEntity;
-use Fifthgate\Objectivity\Core\Tests\Mocks\MockFillableDomainEntity;
 
-use Fifthgate\Objectivity\Core\Tests\Mocks\MockSerializableDomainEntity;
-use Fifthgate\Objectivity\Core\Tests\Mocks\MockShadowableDomainEntity;
-use Fifthgate\Objectivity\Core\Domain\Exceptions\ShadowValueException;
+use Fifthgate\Objectivity\Core\Tests\Mocks\MockFillableDomainEntity;
 use \DateTime;
 use Fifthgate\Objectivity\Core\Tests\Mocks\DummyValueObject;
 use Fifthgate\Objectivity\Core\Domain\Traits\Exceptions\FillableInvalidValueException;
 
 class FillableEntityTest extends ObjectivityCoreTestCase
 {
-    public function testFill()
+    public function testFill(): void
     {
         $dummyValueObject = new DummyValueObject;
         $dummyValueObject->setValueObjectName("Test Value Object");
@@ -47,7 +45,7 @@ class FillableEntityTest extends ObjectivityCoreTestCase
 
     }
 
-    public function testValueTypeMismatch()
+    public function testValueTypeMismatch(): void
     {
         $dummyValueObject = new DummyValueObject;
         $dummyValueObject->setValueObjectName("Test Value Object");
@@ -59,7 +57,7 @@ class FillableEntityTest extends ObjectivityCoreTestCase
         $filledEntity = MockFillableDomainEntity::fill($invalidArray);
     }
 
-    public function testUnparseableDate()
+    public function testUnparseableDate(): void
     {
         $invalidArray = [
              'dummy_date' => "sdfljkisdfjlkwqkjl",
@@ -68,7 +66,7 @@ class FillableEntityTest extends ObjectivityCoreTestCase
         $filledEntity = MockFillableDomainEntity::fill($invalidArray);
     }
 
-    public function testNonString()
+    public function testNonString(): void
     {
         $invalidArray = [
             'dummy_string_value' => new DateTime
@@ -77,7 +75,8 @@ class FillableEntityTest extends ObjectivityCoreTestCase
         $filledEntity = MockFillableDomainEntity::fill($invalidArray);
     }
 
-     public function testNonBool() {
+     public function testNonBool(): void
+     {
         $invalidArray = [
             'dummy_bool' => new DateTime
         ];
@@ -85,7 +84,8 @@ class FillableEntityTest extends ObjectivityCoreTestCase
         $filledEntity = MockFillableDomainEntity::fill($invalidArray);
     }
 
-    public function testNonInt() {
+    public function testNonInt(): void
+    {
         $invalidArray = [
             'dummy_int' => new DateTime
         ];
@@ -93,7 +93,8 @@ class FillableEntityTest extends ObjectivityCoreTestCase
         $filledEntity = MockFillableDomainEntity::fill($invalidArray);
     }
 
-    public function testNonArray() {
+    public function testNonArray(): void
+    {
         $invalidArray = [
             'dummy_array' => new DateTime
         ];
@@ -101,7 +102,8 @@ class FillableEntityTest extends ObjectivityCoreTestCase
         $filledEntity = MockFillableDomainEntity::fill($invalidArray);
     }
 
-    public function testNonFloat() {
+    public function testNonFloat(): void
+    {
         $invalidArray = [
             'dummy_float' => new DateTime
         ];
@@ -109,7 +111,7 @@ class FillableEntityTest extends ObjectivityCoreTestCase
         $filledEntity = MockFillableDomainEntity::fill($invalidArray);
     }
 
-    public function testObjectTypeMismatch()
+    public function testObjectTypeMismatch(): void
     {
         $invalidArray = [
             'dummy_value_object' => new DateTime
@@ -118,7 +120,7 @@ class FillableEntityTest extends ObjectivityCoreTestCase
         $filledEntity = MockFillableDomainEntity::fill($invalidArray);
     }
 
-    public function testNonExistentSetterMethod()
+    public function testNonExistentSetterMethod(): void
     {
         $invalidArray = [
             'i_do_not_exist' => new DateTime
@@ -127,7 +129,7 @@ class FillableEntityTest extends ObjectivityCoreTestCase
         $filledEntity = MockFillableDomainEntity::fill($invalidArray);
     }
 
-    public function testNonPublicSetter()
+    public function testNonPublicSetter(): void
     {
         $invalidArray = [
             'private_date' => new DateTime
@@ -136,7 +138,7 @@ class FillableEntityTest extends ObjectivityCoreTestCase
         $filledEntity = MockFillableDomainEntity::fill($invalidArray);    
     }
 
-    public function testTooManyParameters()
+    public function testTooManyParameters(): void
     {
         $invalidArray = [
             'too_many_parameters' => 'lorem'

@@ -1,16 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Fifthgate\Objectivity\Core\Tests;
 
-use Fifthgate\Objectivity\Core\Tests\Mocks\MockDomainEntity;
-use Fifthgate\Objectivity\Core\Tests\Mocks\MockSerializableDomainEntity;
+use DateTime;
+use Fifthgate\Objectivity\Core\Domain\Traits\Exceptions\ShadowValueException;
 use Fifthgate\Objectivity\Core\Tests\Mocks\MockShadowableDomainEntity;
-use Fifthgate\Objectivity\Core\Domain\Exceptions\ShadowValueException;
-use \DateTime;
 
 class ShadowValueTest extends ObjectivityCoreTestCase
 {
-    private function makeShadowEntity()
+    /**
+     * @throws ShadowValueException
+     */
+    private function makeShadowEntity(): MockShadowableDomainEntity
     {
         $domainEntity = new MockShadowableDomainEntity;
         $domainEntity->setID(987);
@@ -28,7 +31,11 @@ class ShadowValueTest extends ObjectivityCoreTestCase
         $domainEntity->setShadowValue('parent_id', 1);
         return $domainEntity;
     }
-    public function testShadowValues()
+
+    /**
+     * @throws ShadowValueException
+     */
+    public function testShadowValues(): void
     {
 
         $domainEntity = $this->makeShadowEntity();
@@ -40,7 +47,7 @@ class ShadowValueTest extends ObjectivityCoreTestCase
         $this->assertNull($domainEntity->getShadowValue('parent_id'));
     }
 
-    public function testUnrealShadowValueSetException()
+    public function testUnrealShadowValueSetException(): void
     {
         $domainEntity = $this->makeShadowEntity();
         $this->expectException(ShadowValueException::class);
