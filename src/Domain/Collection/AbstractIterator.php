@@ -11,11 +11,11 @@ use ReturnTypeWillChange;
 /**
  * An abstract iterator, useless on its own but useful for avoiding duplication of effort.
  */
-abstract class AbstractIterator implements Iterator
+abstract class AbstractIterator implements Iterator, \Countable
 {
     protected array $collection = [];
 
-    protected $position;
+    protected int $position;
 
     //@codeCoverageIgnoreStart
     /**
@@ -49,7 +49,7 @@ abstract class AbstractIterator implements Iterator
      *
      * @return DomainEntityInterface
      */
-    public function current(): DomainEntityInterface
+    public function current(): mixed
     {
         return $this->collection[$this->position];
     }
@@ -59,7 +59,7 @@ abstract class AbstractIterator implements Iterator
      *
      * @return mixed position
      */
-    #[ReturnTypeWillChange] public function key()
+    #[ReturnTypeWillChange] public function key(): mixed
     {
         return $this->position;
     }
@@ -128,10 +128,6 @@ abstract class AbstractIterator implements Iterator
      */
     public function count() : int
     {
-        $i = 0;
-        foreach ($this->collection as $item) {
-            $i++;
-        }
-        return $i;
+        return count($this->collection);
     }
 }

@@ -12,7 +12,7 @@ abstract class AbstractDomainEntityCollection extends AbstractIterator implement
 {
     protected array $collection = [];
 
-    protected $position;
+    protected int $position;
 
     /**
      * Add an item to the end of the collection
