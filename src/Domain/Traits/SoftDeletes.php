@@ -28,7 +28,7 @@ use \DateTimeInterface;
  */
 trait SoftDeletes
 {
-     protected ?\DateTimeInterface $deletedAt;
+     protected ?\DateTimeInterface $deletedAt = null;
 
     final public function setDeletedAt(DateTimeInterface $deletedAt): void
     {

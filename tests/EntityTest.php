@@ -2,6 +2,7 @@
 
 namespace Fifthgate\Objectivity\Core\Tests;
 
+use Carbon\Carbon;
 use Fifthgate\Objectivity\Core\Tests\Mocks\MockDomainEntity;
 use Fifthgate\Objectivity\Core\Tests\Mocks\MockSerializableDomainEntity;
 
@@ -102,5 +103,14 @@ class EntityTest extends ObjectivityCoreTestCase
 
         $clonedEntity = clone $domainEntity;
         $this->assertNull($clonedEntity->getID());
+    }
+
+    public function testSoftDeletes() : void {
+        $domainEntity = new MockDomainEntity();
+        $domainEntity->setID(987);
+        self::assertNull($domainEntity->getDeletedAt());
+        $deletedAt = new Carbon();
+        $domainEntity->setDeletedAt($deletedAt);
+        self::assertEquals($deletedAt, $domainEntity->getDeletedAt());
     }
 }
